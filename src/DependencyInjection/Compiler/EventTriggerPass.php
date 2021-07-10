@@ -36,20 +36,14 @@ final class EventTriggerPass implements CompilerPassInterface
                 );
             }
 
-            foreach ($tags as $attributes) {
-                $triggerName = $attributes['triggerName'];
+            foreach ($tags as ['triggerName' => $triggerName, 'metadata' => $metadata]) {
                 $trigger = sprintf('vxm.hasura.event_trigger.trigger_%s', $triggerName);
-                $metadata = sprintf('vxm.hasura.event_trigger.metadata_%s', $triggerName);
                 $handler = sprintf('vxm.hasura.event_trigger.handler_%s', $triggerName);
-
-                $metadataDef = new ChildDefinition('vxm.hasura.event_trigger.metadata');
-                $metadataDef->replaceArgument(0, $triggerName);
 
                 $triggerDef = new ChildDefinition('vxm.hasura.event_trigger.trigger');
                 $triggerDef->replaceArgument(0, new Reference($metadata));
                 $triggerDef->replaceArgument(1, new Reference($handler));
 
-                $container->setDefinition($metadata, $metadataDef);
                 $container->setAlias($handler, $id);
                 $container->setDefinition($trigger, $triggerDef);
 

@@ -36,24 +36,14 @@ final class ActionPass implements CompilerPassInterface
                 );
             }
 
-            foreach ($tags as $attributes) {
-                $actionName = $attributes['actionName'];
-                $action = sprintf('vxm.hasura.action.action_%s', $actionName);
-                $metadata = sprintf('vxm.hasura.action.metadata_%s', $actionName);
+            foreach ($tags as ['actionName' => $actionName, 'metadata' => $metadata]) {
                 $resolver = sprintf('vxm.hasura.action.resolver_%s', $actionName);
-
-                $metadataDef = new ChildDefinition('vxm.hasura.action.metadata');
-                $metadataDef->replaceArgument(0, $actionName);
-                $metadataDef->replaceArgument(1, $attributes['inputClass']);
-                $metadataDef->replaceArgument(2, $attributes['denormalizeContext']);
-                $metadataDef->replaceArgument(3, $attributes['validate']);
-                $metadataDef->replaceArgument(4, $attributes['normalizeContext']);
+                $action = sprintf('vxm.hasura.action.action_%s', $actionName);
 
                 $actionDef = new ChildDefinition('vxm.hasura.action.action');
                 $actionDef->replaceArgument(0, new Reference($metadata));
                 $actionDef->replaceArgument(1, new Reference($resolver));
 
-                $container->setDefinition($metadata, $metadataDef);
                 $container->setAlias($resolver, $id);
                 $container->setDefinition($action, $actionDef);
 

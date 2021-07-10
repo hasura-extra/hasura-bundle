@@ -38,15 +38,21 @@ final class HasuraExtension extends Extension
     {
         $container->registerAttributeForAutoconfiguration(
             AsHasuraActionResolver::class,
-            function (ChildDefinition $definition, AsHasuraActionResolver $attribute) {
+            function (ChildDefinition $definition, AsHasuraActionResolver $attribute) use ($container) {
+                $metadata = sprintf('vxm.hasura.action.metadata_%s', $attribute->actionName);
+                $metadataRef = new ChildDefinition('vxm.hasura.action.metadata');
+                $metadataRef->replaceArgument(0, $attribute->actionName);
+                $metadataRef->replaceArgument(1, $attribute->inputClass);
+                $metadataRef->replaceArgument(2, $attribute->denormalizeContext);
+                $metadataRef->replaceArgument(3, $attribute->validate);
+                $metadataRef->replaceArgument(4, $attribute->normalizeContext);
+                $container->setDefinition($metadata, $metadataRef);
+
                 $definition->addTag(
                     'vxm.hasura.action.resolver',
                     [
                         'actionName' => $attribute->actionName,
-                        'inputClass' => $attribute->inputClass,
-                        'denormalizeContext' => $attribute->denormalizeContext,
-                        'validate' => $attribute->validate,
-                        'normalizeContext' => $attribute->normalizeContext,
+                        'metadata' => $metadata,
                     ]
                 );
             }
@@ -57,11 +63,17 @@ final class HasuraExtension extends Extension
     {
         $container->registerAttributeForAutoconfiguration(
             AsHasuraEventHandler::class,
-            function (ChildDefinition $definition, AsHasuraEventHandler $attribute) {
+            function (ChildDefinition $definition, AsHasuraEventHandler $attribute) use ($container) {
+                $metadata = sprintf('vxm.hasura.event_trigger.metadata_%s', $attribute->triggerName);
+                $metadataDef = new ChildDefinition('vxm.hasura.event_trigger.metadata');
+                $metadataDef->replaceArgument(0, $attribute->triggerName);
+                $container->setDefinition($metadata, $metadataDef);
+
                 $definition->addTag(
                     'vxm.hasura.event_trigger.handler',
                     [
                         'triggerName' => $attribute->triggerName,
+                        'metadata' => $metadata,
                     ]
                 );
             }
