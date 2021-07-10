@@ -28,14 +28,17 @@ return static function (ContainerConfigurator $configurator) {
             )
         ->set('vxm.hasura.validation.action_request_validator', ActionRequestValidator::class)
             ->parent('vxm.hasura.validation.request_validator')
-            ->tag('vxm.hasura.request_validator')
         ->set('vxm.hasura.validation.event_trigger_request_validator', EventTriggerRequestValidator::class)
             ->parent('vxm.hasura.validation.request_validator')
-            ->tag('vxm.hasura.request_validator')
         ->set('vxm.hasura.validation.chain_request_validator', ChainRequestValidator::class)
             ->args(
                 [
-                    tagged_iterator('vxm.hasura.request_validator')
+                    iterator(
+                        [
+                            service('vxm.hasura.validation.action_request_validator'),
+                            service('vxm.hasura.validation.event_trigger_request_validator'),
+                        ]
+                    ),
                 ]
             )
         ->alias(RequestValidatorInterface::class, 'vxm.hasura.validation.chain_request_validator')

@@ -17,13 +17,14 @@ use VXM\Hasura\Action\Metadata;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.action_manager', ActionManager::class)
+        ->set('vxm.hasura.action.manager', ActionManager::class)
             ->args(
                 [
                     abstract_arg('actions'),
                 ]
             )
-        ->set('vxm.hasura.action_metadata', Metadata::class)
+        ->set('vxm.hasura.action.metadata', Metadata::class)
+            ->abstract()
             ->args(
                 [
                     abstract_arg('name'),
@@ -33,7 +34,7 @@ return static function (ContainerConfigurator $configurator) {
                     abstract_arg('normalize context')
                 ]
             )
-        ->set('vxm.hasura.action', Action::class)
+        ->set('vxm.hasura.action.action', Action::class)
             ->abstract()
             ->args(
                 [

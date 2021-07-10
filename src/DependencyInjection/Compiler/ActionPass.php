@@ -23,7 +23,7 @@ final class ActionPass implements CompilerPassInterface
     {
         $actions = [];
 
-        foreach ($container->findTaggedServiceIds('vxm.hasura.action_resolver') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('vxm.hasura.action.resolver') as $id => $tags) {
             if (!is_a($container->getDefinition($id)->getClass(), ResolverInterface::class, true)) {
                 throw new InvalidConfigurationException(
                     sprintf('Action resolver should be implement `%s`', ResolverInterface::class)
@@ -32,18 +32,18 @@ final class ActionPass implements CompilerPassInterface
 
             foreach ($tags as $attributes) {
                 $actionName = $attributes['actionName'];
-                $action = sprintf('vxm.hasura.action_%s', $actionName);
-                $metadata = sprintf('vxm.hasura.action_metadata_%s', $actionName);
-                $resolver = sprintf('vxm.hasura.action_resolver_%s', $actionName);
+                $action = sprintf('vxm.hasura.action.action_%s', $actionName);
+                $metadata = sprintf('vxm.hasura.action.metadata_%s', $actionName);
+                $resolver = sprintf('vxm.hasura.action.resolver_%s', $actionName);
 
-                $metadataDef = new ChildDefinition('vxm.hasura.action_metadata');
+                $metadataDef = new ChildDefinition('vxm.hasura.action.metadata');
                 $metadataDef->replaceArgument(0, $actionName);
                 $metadataDef->replaceArgument(1, $attributes['inputClass']);
                 $metadataDef->replaceArgument(2, $attributes['denormalizeContext']);
                 $metadataDef->replaceArgument(3, $attributes['validate']);
                 $metadataDef->replaceArgument(4, $attributes['normalizeContext']);
 
-                $actionDef = new ChildDefinition('vxm.hasura.action');
+                $actionDef = new ChildDefinition('vxm.hasura.action.action');
                 $actionDef->replaceArgument(0, new Reference($metadata));
                 $actionDef->replaceArgument(1, new Reference($resolver));
 
@@ -56,7 +56,7 @@ final class ActionPass implements CompilerPassInterface
         }
 
         $container
-            ->getDefinition('vxm.hasura.action_manager')
+            ->getDefinition('vxm.hasura.action.manager')
             ->replaceArgument(0, $actions);
     }
 }

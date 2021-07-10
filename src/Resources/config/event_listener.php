@@ -23,6 +23,13 @@ return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
         ->set('vxm.hasura.event_listener.normalize_request', NormalizeRequestListener::class)
+            ->args(
+                [
+                    service('vxm.hasura.validation.chain_request_validator'),
+                    service('vxm.hasura.action.manager'),
+                    service('vxm.hasura.event_trigger.manager')
+                ]
+            )
             ->tag(
                 'kernel.event_listener',
                 [

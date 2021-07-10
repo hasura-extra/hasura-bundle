@@ -33,7 +33,7 @@ final class HasuraExtension extends Extension
             AsHasuraActionResolver::class,
             function (ChildDefinition $definition, AsHasuraActionResolver $attribute) {
                 $definition->addTag(
-                    'vxm.hasura.action_resolver',
+                    'vxm.hasura.action.resolver',
                     [
                         'actionName' => $attribute->actionName,
                         'inputClass' => $attribute->inputClass,
@@ -52,7 +52,7 @@ final class HasuraExtension extends Extension
             AsHasuraEventHandler::class,
             function (ChildDefinition $definition, AsHasuraEventHandler $attribute) {
                 $definition->addTag(
-                    'vxm.hasura.event_handler',
+                    'vxm.hasura.event_trigger.handler',
                     [
                         'triggerName' => $attribute->triggerName,
                     ]

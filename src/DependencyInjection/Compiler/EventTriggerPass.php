@@ -23,7 +23,7 @@ final class EventTriggerPass implements CompilerPassInterface
     {
         $eventTriggers = [];
 
-        foreach ($container->findTaggedServiceIds('vxm.hasura.event_handler') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('vxm.hasura.event_trigger.handler') as $id => $tags) {
             if (!is_a($container->getDefinition($id)->getClass(), HandlerInterface::class, true)) {
                 throw new InvalidConfigurationException(
                     sprintf('Action resolver should be implement `%s`', HandlerInterface::class)
@@ -32,27 +32,27 @@ final class EventTriggerPass implements CompilerPassInterface
 
             foreach ($tags as $attributes) {
                 $triggerName = $attributes['triggerName'];
-                $eventTrigger = sprintf('vxm.hasura.event_trigger_%s', $triggerName);
-                $metadata = sprintf('vxm.hasura.event_trigger_metadata_%s', $triggerName);
-                $handler = sprintf('vxm.hasura.event_handler_%s', $triggerName);
+                $trigger = sprintf('vxm.hasura.event_trigger.trigger_%s', $triggerName);
+                $metadata = sprintf('vxm.hasura.event_trigger.metadata_%s', $triggerName);
+                $handler = sprintf('vxm.hasura.event_trigger.handler_%s', $triggerName);
 
-                $metadataDef = new ChildDefinition('vxm.hasura.event_trigger_metadata');
+                $metadataDef = new ChildDefinition('vxm.hasura.event_trigger.metadata');
                 $metadataDef->replaceArgument(0, $triggerName);
 
-                $eventTriggerDef = new ChildDefinition('vxm.hasura.event_trigger');
-                $eventTriggerDef->replaceArgument(0, new Reference($metadata));
-                $eventTriggerDef->replaceArgument(1, new Reference($handler));
+                $triggerDef = new ChildDefinition('vxm.hasura.event_trigger.trigger');
+                $triggerDef->replaceArgument(0, new Reference($metadata));
+                $triggerDef->replaceArgument(1, new Reference($handler));
 
                 $container->setDefinition($metadata, $metadataDef);
                 $container->setAlias($handler, $id);
-                $container->setDefinition($eventTrigger, $eventTriggerDef);
+                $container->setDefinition($trigger, $triggerDef);
 
-                $eventTriggers[$triggerName] = new Reference($eventTrigger);
+                $eventTriggers[$triggerName] = new Reference($trigger);
             }
         }
 
         $container
-            ->getDefinition('vxm.hasura.event_trigger_manager')
+            ->getDefinition('vxm.hasura.event_trigger.manager')
             ->replaceArgument(0, $eventTriggers);
     }
 }

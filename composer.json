@@ -1,0 +1,38 @@
+{
+  "name": "vxm/hasura-bundle",
+  "description": "Symfony bundle to help handle Hasura action & event.",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Minh Vuong",
+      "email": "vuongxuongminh@gmail.com"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=8.0",
+    "symfony/framework-bundle": "^5.3",
+    "symfony/serializer": "^5.3",
+    "symfony/uid": "^5.3",
+    "symfony/validator": "^5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "VXM\\Hasura\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "VXM\\Hasura\\Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "symfony/browser-kit": "^5.3",
+    "symfony/console": "^5.3",
+    "symfony/phpunit-bridge": "^5.3"
+  }
+}

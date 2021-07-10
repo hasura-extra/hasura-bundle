@@ -17,25 +17,26 @@ use VXM\Hasura\EventTrigger\EventTriggerManager;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.event_trigger_manager', EventTriggerManager::class)
-        ->args(
-            [
-                abstract_arg('event triggers'),
-            ]
-        )
-        ->set('vxm.hasura.event_trigger_metadata', Metadata::class)
-        ->args(
-            [
-                abstract_arg('trigger name'),
-            ]
-        )
-        ->set('vxm.hasura.event_trigger', EventTrigger::class)
-        ->abstract()
-        ->args(
-            [
-                abstract_arg('metadata'),
-                abstract_arg('handler')
-            ]
-        )
+        ->set('vxm.hasura.event_trigger.manager', EventTriggerManager::class)
+            ->args(
+                [
+                    abstract_arg('event triggers'),
+                ]
+            )
+        ->set('vxm.hasura.event_trigger.metadata', Metadata::class)
+            ->abstract()
+            ->args(
+                [
+                    abstract_arg('trigger name'),
+                ]
+            )
+        ->set('vxm.hasura.event_trigger.trigger', EventTrigger::class)
+            ->abstract()
+            ->args(
+                [
+                    abstract_arg('metadata'),
+                    abstract_arg('handler')
+                ]
+            )
     ;
 };

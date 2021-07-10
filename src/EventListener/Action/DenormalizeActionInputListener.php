@@ -25,7 +25,7 @@ final class DenormalizeActionInputListener
         $attributes = $request->attributes;
         $action = $attributes->get('_hasura_action');
 
-        if (null !== $action) {
+        if (null === $action) {
             return;
         }
 
