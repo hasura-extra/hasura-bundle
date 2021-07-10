@@ -1,0 +1,63 @@
+<?php
+/*
+ * (c) Minh Vuong <vuongxuongminh@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+declare(strict_types=1);
+
+namespace VXM\Hasura\DependencyInjection;
+
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use VXM\Hasura\Attribute\AsHasuraActionResolver;
+use VXM\Hasura\Attribute\AsHasuraEventHandler;
+
+final class HasuraExtension extends Extension
+{
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $loader = new PhpFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
+        $loader->load('action.php');
+        $loader->load('event_trigger.php');
+    }
+
+    private function registerActionAttribute(ContainerBuilder $container)
+    {
+        $container->registerAttributeForAutoconfiguration(
+            AsHasuraActionResolver::class,
+            function (ChildDefinition $definition, AsHasuraActionResolver $attribute) {
+                $definition->addTag(
+                    'vxm.hasura.action_resolver',
+                    [
+                        'actionName' => $attribute->actionName,
+                        'inputClass' => $attribute->inputClass,
+                        'denormalizeContext' => $attribute->denormalizeContext,
+                        'validate' => $attribute->validate,
+                        'normalizeContext' => $attribute->normalizeContext,
+                    ]
+                );
+            }
+        );
+    }
+
+    private function registerEventTriggerAttribute(ContainerBuilder $container)
+    {
+        $container->registerAttributeForAutoconfiguration(
+            AsHasuraEventHandler::class,
+            function (ChildDefinition $definition, AsHasuraEventHandler $attribute) {
+                $definition->addTag(
+                    'vxm.hasura.event_handler',
+                    [
+                        'triggerName' => $attribute->triggerName,
+                    ]
+                );
+            }
+        );
+    }
+}
