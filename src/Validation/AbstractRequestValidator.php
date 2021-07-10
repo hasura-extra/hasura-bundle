@@ -32,8 +32,8 @@ abstract class AbstractRequestValidator implements RequestValidatorInterface
             return;
         }
 
-        if ('application/json' !== $request->getContentType()) {
-            throw new UnsupportedMediaTypeHttpException('Only support `application/json` MIME type.');
+        if ('json' !== $request->getContentType()) {
+            throw new UnsupportedMediaTypeHttpException('Only support `json` MIME type.');
         }
 
         $content = json_decode($request->getContent(), true);
