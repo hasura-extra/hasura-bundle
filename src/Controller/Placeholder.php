@@ -8,10 +8,9 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Action;
+namespace VXM\Hasura\Controller;
 
-
-class Placeholder
+final class Placeholder
 {
     public function __invoke(mixed $data)
     {

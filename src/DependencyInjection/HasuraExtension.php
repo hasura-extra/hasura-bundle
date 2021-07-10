@@ -24,7 +24,14 @@ final class HasuraExtension extends Extension
     {
         $loader = new PhpFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
         $loader->load('action.php');
+        $loader->load('base.php');
+        $loader->load('controller.php');
+        $loader->load('event_listener.php');
         $loader->load('event_trigger.php');
+        $loader->load('validation.php');
+
+        $this->registerActionAttribute($container);
+        $this->registerEventTriggerAttribute($container);
     }
 
     private function registerActionAttribute(ContainerBuilder $container)
