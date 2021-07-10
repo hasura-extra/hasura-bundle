@@ -24,9 +24,15 @@ final class EventTriggerPass implements CompilerPassInterface
         $eventTriggers = [];
 
         foreach ($container->findTaggedServiceIds('vxm.hasura.event_trigger.handler') as $id => $tags) {
-            if (!is_a($container->getDefinition($id)->getClass(), HandlerInterface::class, true)) {
+            $handlerClass = $container->getDefinition($id)->getClass();
+
+            if (!is_a($handlerClass, HandlerInterface::class, true)) {
                 throw new InvalidConfigurationException(
-                    sprintf('Action resolver should be implement `%s`', HandlerInterface::class)
+                    sprintf(
+                        'Event handler: `%s` should be implement `%s`, are you forget it?',
+                        $handlerClass,
+                        HandlerInterface::class
+                    )
                 );
             }
 

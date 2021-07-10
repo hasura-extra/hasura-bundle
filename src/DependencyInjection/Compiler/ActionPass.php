@@ -24,9 +24,15 @@ final class ActionPass implements CompilerPassInterface
         $actions = [];
 
         foreach ($container->findTaggedServiceIds('vxm.hasura.action.resolver') as $id => $tags) {
-            if (!is_a($container->getDefinition($id)->getClass(), ResolverInterface::class, true)) {
+            $resolverClass = $container->getDefinition($id)->getClass();
+
+            if (!is_a($resolverClass, ResolverInterface::class, true)) {
                 throw new InvalidConfigurationException(
-                    sprintf('Action resolver should be implement `%s`', ResolverInterface::class)
+                    sprintf(
+                        'Action resolver `%s` should be implement `%s`, are you forget it?',
+                        $resolverClass,
+                        ResolverInterface::class
+                    )
                 );
             }
 
