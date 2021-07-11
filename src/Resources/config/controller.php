@@ -18,6 +18,8 @@ return static function (ContainerConfigurator $configurator) {
         ->set('vxm.hasura.controller.placeholder', Placeholder::class)
             ->public()
         ->alias('vxm.hasura.controller.action_placeholder', 'vxm.hasura.controller.placeholder')
+            ->public()
         ->alias('vxm.hasura.controller.event_trigger_placeholder', 'vxm.hasura.controller.placeholder')
+            ->public()
     ;
 };
