@@ -29,6 +29,12 @@ final class HasuraExtension extends Extension implements PrependExtensionInterfa
                 'serializer' => [
                     'enabled' => true,
                 ],
+            ]
+        );
+
+        $container->prependExtensionConfig(
+            'framework',
+            [
                 'property_info' => [
                     'enabled' => true,
                 ],
