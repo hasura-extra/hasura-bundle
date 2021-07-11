@@ -43,7 +43,7 @@ final class ActionInputValidateListener
         if (count($violations) > 0) {
             $violation = $violations->get(0);
 
-            throw new ViolationHttpException($violation->getCode(), $violation->getMessage());
+            throw new ViolationHttpException($violation);
         }
     }
 }

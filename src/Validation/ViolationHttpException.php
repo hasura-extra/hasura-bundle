@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace VXM\Hasura\Validation;
 
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolation;
 use VXM\Hasura\Exception\HttpExceptionInterface;
 
 final class ViolationHttpException extends BadRequestHttpException implements HttpExceptionInterface
@@ -18,13 +19,17 @@ final class ViolationHttpException extends BadRequestHttpException implements Ht
     private string $violationCode;
 
     public function __construct(
-        ?string $violationCode = '',
-        ?string $message = '',
+        ConstraintViolation $violation,
         \Throwable $previous = null,
         int $code = 0,
         array $headers = []
     ) {
-        $this->violationCode = (string)$violationCode;
+        $this->violationCode = (string)$violation->getCode();
+        $message = sprintf(
+            '`%s`: %s',
+            $violation->getPropertyPath(),
+            $violation->getMessage()
+        );
 
         parent::__construct($message, $previous, $code, $headers);
     }
