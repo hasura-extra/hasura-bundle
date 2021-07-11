@@ -16,8 +16,7 @@
   "require": {
     "php": ">=8.0",
     "symfony/framework-bundle": "^5.3",
-    "symfony/property-info": "^5.3",
-    "symfony/serializer": "^5.3",
+    "symfony/serializer-pack": "^1.0",
     "symfony/uid": "^5.3",
     "symfony/validator": "^5.3"
   },

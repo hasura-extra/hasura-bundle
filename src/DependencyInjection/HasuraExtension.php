@@ -14,34 +14,12 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use VXM\Hasura\Attribute\AsHasuraActionResolver;
 use VXM\Hasura\Attribute\AsHasuraEventHandler;
 
-final class HasuraExtension extends Extension implements PrependExtensionInterface
+final class HasuraExtension extends Extension
 {
-    public function prepend(ContainerBuilder $container): void
-    {
-        $container->prependExtensionConfig(
-            'framework',
-            [
-                'serializer' => [
-                    'enabled' => true,
-                ],
-            ]
-        );
-
-        $container->prependExtensionConfig(
-            'framework',
-            [
-                'property_info' => [
-                    'enabled' => true,
-                ],
-            ]
-        );
-    }
-
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new PhpFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
