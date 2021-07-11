@@ -98,7 +98,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => 16,
                 ]
             )
-        ->set('vxm.hasura.event_listener.normalize_action_output', RespondListener::class)
+        ->set('vxm.hasura.event_listener.respond', RespondListener::class)
             ->tag(
                 'kernel.event_listener',
                 [
