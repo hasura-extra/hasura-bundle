@@ -11,11 +11,11 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use VXM\Hasura\EventListener\Action\ActionInputValidateListener;
-use VXM\Hasura\EventListener\Action\ActionInputValidationExceptionListener;
 use VXM\Hasura\EventListener\Action\DenormalizeActionInputListener;
 use VXM\Hasura\EventListener\Action\NormalizeActionOutputListener;
 use VXM\Hasura\EventListener\Action\ResolveActionListener;
 use VXM\Hasura\EventListener\EventTrigger\HandleEventListener;
+use VXM\Hasura\EventListener\ExceptionListener;
 use VXM\Hasura\EventListener\NormalizeRequestListener;
 use VXM\Hasura\EventListener\RespondListener;
 
@@ -107,7 +107,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => 8,
                 ]
             )
-        ->set('vxm.hasura.event_listener.action_input_validation_exception', ActionInputValidationExceptionListener::class)
+        ->set('vxm.hasura.event_listener.action_input_validation_exception', ExceptionListener::class)
             ->tag(
                 'kernel.event_listener',
                 [

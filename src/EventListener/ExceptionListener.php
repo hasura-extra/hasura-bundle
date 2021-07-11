@@ -8,28 +8,28 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener\Action;
+namespace VXM\Hasura\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use VXM\Hasura\Validation\ActionInputValidationException;
+use VXM\Hasura\Exception\HttpExceptionInterface;
 
-final class ActionInputValidationExceptionListener
+final class ExceptionListener
 {
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
 
-        if (!$exception instanceof ActionInputValidationException) {
+        if (!$exception instanceof HttpExceptionInterface) {
             return;
         }
 
         $response = new JsonResponse(
             [
                 'message' => $exception->getMessage(),
-                'code' => $exception->getCode(),
+                'code' => $exception->getMessageCode(),
             ],
-            422
+            $exception->getStatusCode()
         );
 
         $event->setResponse($response);

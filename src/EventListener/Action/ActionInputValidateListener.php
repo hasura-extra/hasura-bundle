@@ -13,9 +13,9 @@ namespace VXM\Hasura\EventListener\Action;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use VXM\Hasura\Action\Action;
-use VXM\Hasura\Validation\ActionInputValidationException;
+use VXM\Hasura\Validation\ViolationHttpException;
 
-class ActionInputValidateListener
+final class ActionInputValidateListener
 {
     public function __construct(private ValidatorInterface $validator)
     {
@@ -43,7 +43,7 @@ class ActionInputValidateListener
         if (count($violations) > 0) {
             $violation = $violations->get(0);
 
-            throw new ActionInputValidationException($violation->getMessage(), $violation->getCode());
+            throw new ViolationHttpException($violation->getCode(), $violation->getMessage());
         }
     }
 }
