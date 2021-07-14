@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\EventTrigger\Metadata;
 use VXM\Hasura\EventTrigger\EventTrigger;
 use VXM\Hasura\EventTrigger\EventTriggerManager;
+use VXM\Hasura\EventTrigger\Metadata;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
@@ -35,7 +35,7 @@ return static function (ContainerConfigurator $configurator) {
             ->args(
                 [
                     abstract_arg('metadata'),
-                    abstract_arg('handler')
+                    abstract_arg('handler'),
                 ]
             )
     ;

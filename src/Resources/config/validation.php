@@ -23,7 +23,7 @@ return static function (ContainerConfigurator $configurator) {
             ->abstract()
             ->args(
                 [
-                    service('vxm.hasura.validator')
+                    service('vxm.hasura.validator'),
                 ]
             )
         ->set('vxm.hasura.validation.action_request_validator', ActionRequestValidator::class)

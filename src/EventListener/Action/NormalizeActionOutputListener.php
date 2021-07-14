@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\EventListener\Action;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use VXM\Hasura\Action\Action;

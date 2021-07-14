@@ -28,13 +28,7 @@ final class ActionPass implements CompilerPassInterface
             $resolverClass = $container->getDefinition($id)->getClass();
 
             if (!is_a($resolverClass, ResolverInterface::class, true)) {
-                throw new InvalidConfigurationException(
-                    sprintf(
-                        'Action resolver `%s` should be implement `%s`, are you forget it?',
-                        $resolverClass,
-                        ResolverInterface::class
-                    )
-                );
+                throw new InvalidConfigurationException(sprintf('Action resolver `%s` should be implement `%s`, are you forget it?', $resolverClass, ResolverInterface::class));
             }
 
             foreach ($tags as ['attribute' => $attribute]) {

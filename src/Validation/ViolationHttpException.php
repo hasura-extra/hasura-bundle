@@ -24,7 +24,7 @@ final class ViolationHttpException extends BadRequestHttpException implements Ht
         int $code = 0,
         array $headers = []
     ) {
-        $this->violationCode = (string)$violation->getCode();
+        $this->violationCode = (string) $violation->getCode();
         $message = sprintf(
             '`%s`: %s',
             $violation->getPropertyPath(),

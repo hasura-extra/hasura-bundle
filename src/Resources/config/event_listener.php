@@ -27,7 +27,7 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     service('vxm.hasura.validation.chain_request_validator'),
                     service('vxm.hasura.action.manager'),
-                    service('vxm.hasura.event_trigger.manager')
+                    service('vxm.hasura.event_trigger.manager'),
                 ]
             )
             ->tag(
@@ -41,7 +41,7 @@ return static function (ContainerConfigurator $configurator) {
         ->set('vxm.hasura.event_listener.denormalize_action_input', DenormalizeActionInputListener::class)
             ->args(
                 [
-                    service('vxm.hasura.serializer')
+                    service('vxm.hasura.serializer'),
                 ]
             )
             ->tag(
@@ -55,7 +55,7 @@ return static function (ContainerConfigurator $configurator) {
         ->set('vxm.hasura.event_listener.action_input_validate', ActionInputValidateListener::class)
             ->args(
                 [
-                    service('vxm.hasura.validator')
+                    service('vxm.hasura.validator'),
                 ]
             )
             ->tag(
@@ -87,7 +87,7 @@ return static function (ContainerConfigurator $configurator) {
         ->set('vxm.hasura.event_listener.normalize_action_output', NormalizeActionOutputListener::class)
             ->args(
                 [
-                    service('vxm.hasura.serializer')
+                    service('vxm.hasura.serializer'),
                 ]
             )
             ->tag(

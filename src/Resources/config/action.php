@@ -31,7 +31,7 @@ return static function (ContainerConfigurator $configurator) {
                     abstract_arg('input class'),
                     abstract_arg('denormalize context'),
                     abstract_arg('validate input'),
-                    abstract_arg('normalize context')
+                    abstract_arg('normalize context'),
                 ]
             )
         ->set('vxm.hasura.action.action', Action::class)
@@ -39,7 +39,7 @@ return static function (ContainerConfigurator $configurator) {
             ->args(
                 [
                     abstract_arg('metadata'),
-                    abstract_arg('resolver')
+                    abstract_arg('resolver'),
                 ]
             )
     ;

@@ -41,5 +41,4 @@ final class DenormalizeActionInputListener
             $request->attributes->set('_hasura_action_input', $input);
         }
     }
-
 }

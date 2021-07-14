@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\Action;
 
-
 final class Action
 {
     public function __construct(private Metadata $metadata, private ResolverInterface $resolver)

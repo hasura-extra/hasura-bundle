@@ -12,5 +12,5 @@ namespace VXM\Hasura\Action;
 
 interface ResolverInterface
 {
-    public function resolve(string $action, array|object $input, array $sessionVariables): array|object;
+    public function resolve(string $action, array | object $input, array $sessionVariables): array | object;
 }

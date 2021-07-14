@@ -28,13 +28,7 @@ final class EventTriggerPass implements CompilerPassInterface
             $handlerClass = $container->getDefinition($id)->getClass();
 
             if (!is_a($handlerClass, HandlerInterface::class, true)) {
-                throw new InvalidConfigurationException(
-                    sprintf(
-                        'Event handler: `%s` should be implement `%s`, are you forget it?',
-                        $handlerClass,
-                        HandlerInterface::class
-                    )
-                );
+                throw new InvalidConfigurationException(sprintf('Event handler: `%s` should be implement `%s`, are you forget it?', $handlerClass, HandlerInterface::class));
             }
 
             foreach ($tags as ['attribute' => $attribute]) {

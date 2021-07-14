@@ -21,5 +21,4 @@ final class AsHasuraActionResolver
         public array $normalizeContext = [],
     ) {
     }
-
 }

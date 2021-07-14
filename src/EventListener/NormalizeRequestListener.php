@@ -44,7 +44,6 @@ final class NormalizeRequestListener
         $this->enrichAttributes($type, $attributes, $message);
     }
 
-
     private function enrichAttributes(string $type, ParameterBag $attributes, array $message): void
     {
         if ('action' === $type) {
