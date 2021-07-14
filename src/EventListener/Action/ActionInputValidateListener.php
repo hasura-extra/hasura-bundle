@@ -26,8 +26,9 @@ final class ActionInputValidateListener
         $request = $event->getRequest();
         /** @var Action $action */
         $action = $request->attributes->get('_hasura_action');
+        $input = $request->attributes->get('_hasura_action_input');
 
-        if (null === $action) {
+        if (null === $action || null === $input) {
             return;
         }
 
@@ -37,7 +38,6 @@ final class ActionInputValidateListener
             return;
         }
 
-        $input = $request->attributes->get('_hasura_action_input');
         $violations = $this->validator->validate($input);
 
         if (count($violations) > 0) {

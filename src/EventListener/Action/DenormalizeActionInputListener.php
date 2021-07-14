@@ -24,8 +24,9 @@ final class DenormalizeActionInputListener
         $request = $event->getRequest();
         $attributes = $request->attributes;
         $action = $attributes->get('_hasura_action');
+        $input = $attributes->get('_hasura_input');
 
-        if (null === $action) {
+        if (null === $action || null === $input) {
             return;
         }
 
@@ -33,7 +34,7 @@ final class DenormalizeActionInputListener
 
         if (null !== $metadata->getInputClass()) {
             $input = $this->serializer->denormalize(
-                $attributes->get('_hasura_action_input'),
+                $input,
                 $metadata->getInputClass(),
                 context: $metadata->getDenormalizeContext()
             );
