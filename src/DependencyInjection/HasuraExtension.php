@@ -38,7 +38,9 @@ final class HasuraExtension extends Extension
             $definition->addTag(
                 'vxm.hasura.handler',
                 [
-                    'attributes' => (array) $attribute,
+                    // Tag attribute not allow array so we need to serialize attribute.
+                    // When this PR https://github.com/symfony/symfony/pull/38540 merge, remove it.
+                    'attributes' => \serialize((array) $attribute),
                     'type' => $attribute instanceof AsActionHandler ? 'action' : 'event',
                 ]
             );

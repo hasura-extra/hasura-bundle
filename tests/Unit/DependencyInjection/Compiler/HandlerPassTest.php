@@ -31,7 +31,7 @@ class HandlerPassTest extends TestCase
         $pass = new HandlerPass();
         $container = new ContainerBuilder();
         $container->setDefinition('test', $definition);
-        $definition->addTag('vxm.hasura.handler', ['attributes' => ['name' => 'test'], 'type' => $type]);
+        $definition->addTag('vxm.hasura.handler', ['attributes' => \serialize(['name' => 'test']), 'type' => $type]);
 
         $extension = new HasuraExtension();
         $extension->load([], $container);
@@ -51,7 +51,7 @@ class HandlerPassTest extends TestCase
         $pass = new HandlerPass();
         $container = new ContainerBuilder();
         $container->setDefinition('test', $definition);
-        $definition->addTag('vxm.hasura.handler', ['attributes' => ['name' => 'test'], 'type' => $type]);
+        $definition->addTag('vxm.hasura.handler', ['attributes' => \serialize(['name' => 'test']), 'type' => $type]);
 
         $extension = new HasuraExtension();
         $extension->load([], $container);

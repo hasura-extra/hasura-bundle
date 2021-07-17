@@ -28,6 +28,7 @@ final class HandlerPass implements CompilerPassInterface
             $handlerClass = $container->getDefinition($id)->getClass();
 
             foreach ($tags as ['attributes' => $attributes, 'type' => $type]) {
+                $attributes = \unserialize($attributes);
                 $name = $attributes['name'];
 
                 if (isset($handlers[$type][$name])) {
