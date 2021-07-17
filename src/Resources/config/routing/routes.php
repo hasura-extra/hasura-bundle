@@ -16,7 +16,7 @@ return static function (RoutingConfigurator $configurator) {
             ->controller('vxm.hasura.controller.action_placeholder')
             ->defaults(['_hasura' => 'action'])
             ->methods(['POST'])
-        ->add('vxm.hasura.controller.event_trigger', '/hasura_event_trigger')
+        ->add('vxm.hasura.controller.event_trigger', '/hasura_event')
             ->controller('vxm.hasura.controller.event_placeholder')
             ->defaults(['_hasura' => 'event'])
             ->methods(['POST'])
