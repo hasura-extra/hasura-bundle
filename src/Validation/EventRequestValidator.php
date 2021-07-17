@@ -45,7 +45,7 @@ final class EventRequestValidator extends AbstractRequestValidator
                         new Assert\NotBlank(),
                         new Assert\Collection(
                             [
-                                'table' => [
+                                'name' => [
                                     new Assert\NotBlank(),
                                     new Assert\Type('string'),
                                 ],
