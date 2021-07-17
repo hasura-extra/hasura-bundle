@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\EventListener\ActionInputValidateListener;
-use VXM\Hasura\EventListener\DenormalizeActionInputListener;
+use VXM\Hasura\EventListener\ActionInputListener;
+use VXM\Hasura\EventListener\ActionOutputListener;
+use VXM\Hasura\EventListener\EventPriorities;
 use VXM\Hasura\EventListener\ExceptionListener;
 use VXM\Hasura\EventListener\HandlerListener;
-use VXM\Hasura\EventListener\NormalizeActionOutputListener;
 use VXM\Hasura\EventListener\ResolveRequestListener;
 use VXM\Hasura\EventListener\RespondListener;
 
@@ -33,26 +33,13 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     'event' => 'kernel.request',
                     'method' => 'onKernelRequest',
-                    'priority' => 16,
+                    'priority' => EventPriorities::PRE_RESOLVE_REQUEST - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.denormalize_action_input', DenormalizeActionInputListener::class)
+        ->set('vxm.hasura.event_listener.action_input', ActionInputListener::class)
             ->args(
                 [
                     service('vxm.hasura.serializer'),
-                ]
-            )
-            ->tag(
-                'kernel.event_listener',
-                [
-                    'event' => 'kernel.request',
-                    'method' => 'onKernelRequest',
-                    'priority' => 6,
-                ]
-            )
-        ->set('vxm.hasura.event_listener.action_input_validate', ActionInputValidateListener::class)
-            ->args(
-                [
                     service('vxm.hasura.validator'),
                 ]
             )
@@ -61,7 +48,7 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     'event' => 'kernel.request',
                     'method' => 'onKernelRequest',
-                    'priority' => 4,
+                    'priority' => EventPriorities::PRE_ACTION_INPUT - 1,
                 ]
             )
         ->set('vxm.hasura.event_listener.handler', HandlerListener::class)
@@ -70,10 +57,10 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     'event' => 'kernel.request',
                     'method' => 'onKernelRequest',
-                    'priority' => 2,
+                    'priority' => EventPriorities::PRE_HANDLER - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.normalize_action_output', NormalizeActionOutputListener::class)
+        ->set('vxm.hasura.event_listener.action_output', ActionOutputListener::class)
             ->args(
                 [
                     service('vxm.hasura.serializer'),
@@ -84,7 +71,7 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     'event' => 'kernel.view',
                     'method' => 'onKernelView',
-                    'priority' => 16,
+                    'priority' => EventPriorities::PRE_ACTION_OUTPUT - 1,
                 ]
             )
         ->set('vxm.hasura.event_listener.respond', RespondListener::class)
@@ -93,7 +80,7 @@ return static function (ContainerConfigurator $configurator) {
                 [
                     'event' => 'kernel.view',
                     'method' => 'onKernelView',
-                    'priority' => 8,
+                    'priority' => EventPriorities::PRE_RESPOND - 1,
                 ]
             )
         ->set('vxm.hasura.event_listener.exception', ExceptionListener::class)

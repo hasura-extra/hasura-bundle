@@ -12,12 +12,14 @@ namespace VXM\Hasura\EventListener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use VXM\Hasura\Validation\ViolationHttpException;
 
-final class DenormalizeActionInputListener
+final class ActionInputListener
 {
     use RequestAttributeExtractionTrait;
 
-    public function __construct(private SerializerInterface $serializer)
+    public function __construct(private SerializerInterface $serializer, private ValidatorInterface $validator)
     {
     }
 
@@ -33,15 +35,28 @@ final class DenormalizeActionInputListener
         [$descriptor, $data] = $attributes;
 
         $inputClass = $descriptor->getAttribute('inputClass');
+        $validate = $descriptor->getAttribute('validate');
 
         if (null !== $inputClass) {
-            $data['input'] = $this->serializer->denormalize(
+            $input = $data['input'] = $this->serializer->denormalize(
                 $data['input'],
                 $inputClass,
                 context: $descriptor->getAttribute('denormalizeContext') ?? []
             );
 
             $request->attributes->set('_hasura_request_data', $data);
+
+            if (!$validate) {
+                return;
+            }
+
+            $violations = $this->validator->validate($input);
+
+            if (count($violations) > 0) {
+                $violation = $violations->get(0);
+
+                throw new ViolationHttpException($violation);
+            }
         }
     }
 }

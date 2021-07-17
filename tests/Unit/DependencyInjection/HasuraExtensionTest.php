@@ -28,10 +28,9 @@ class HasuraExtensionTest extends TestCase
         $this->assertTrue($container->hasDefinition('vxm.hasura.handler.descriptor'));
 
         $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.resolve_request'));
-        $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.denormalize_action_input'));
-        $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.action_input_validate'));
+        $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.action_input'));
         $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.handler'));
-        $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.normalize_action_output'));
+        $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.action_output'));
         $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.respond'));
         $this->assertTrue($container->hasDefinition('vxm.hasura.event_listener.exception'));
 

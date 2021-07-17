@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use VXM\Hasura\Handler\HandlerDescriptor;
 
-final class NormalizeActionOutputListener
+final class ActionOutputListener
 {
     use RequestAttributeExtractionTrait;
 
