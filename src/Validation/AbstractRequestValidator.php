@@ -44,8 +44,8 @@ abstract class AbstractRequestValidator implements RequestValidatorInterface
             if (count($violations) > 0) {
                 throw new \UnexpectedValueException('Bad request content!');
             }
-        } catch (\Exception $exception) {
-            throw new BadRequestHttpException($exception->getMessage());
+        } catch (\Exception $e) {
+            throw new BadRequestHttpException($e->getMessage(), $e->getCode());
         }
     }
 
