@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 final class EventRequestValidator extends AbstractRequestValidator
 {
-    public const TYPE = 'event';
+    protected const TYPE = 'event';
 
     protected function getConstraints(): array
     {
