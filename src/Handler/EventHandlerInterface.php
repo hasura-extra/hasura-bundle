@@ -10,17 +10,14 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\Handler;
 
-use Symfony\Component\Uid\Uuid;
-
 interface EventHandlerInterface
 {
     public function handle(
-        Uuid $id,
-        string $triggerName,
-        string $op,
+        string $name,
+        string $id,
         array $table,
-        array $data,
-        array $sessionVariables,
-        \DateTimeImmutable $createdAt,
+        array $event,
+        string $createdAt,
+        array $deliveryInfo
     ): void;
 }

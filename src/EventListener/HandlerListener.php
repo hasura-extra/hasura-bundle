@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace VXM\Hasura\EventListener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Uid\Uuid;
 use VXM\Hasura\Handler\ActionHandlerInterface;
 use VXM\Hasura\Handler\HandlerDescriptor;
 
@@ -42,13 +41,12 @@ final class HandlerListener
         } else {
             $result = [];
             $handler->handle(
-                Uuid::fromString($data['id']),
                 $name,
-                $data['event']['op'],
+                $data['id'],
                 $data['table'],
-                $data['event']['data'],
-                $data['event']['session_variables'],
-                new \DateTimeImmutable($data['created_at'])
+                $data['event'],
+                $data['created_at'],
+                $data['delivery_info']
             );
         }
 

@@ -86,6 +86,23 @@ final class EventRequestValidator extends AbstractRequestValidator
                             ]
                         ),
                     ],
+                    'delivery_info' => [
+                        new Assert\NotBlank(),
+                        new Assert\Collection(
+                            [
+                                'max_retries' => [
+                                    new Assert\NotBlank(),
+                                    new Assert\Type('int'),
+                                    new Assert\GreaterThanOrEqual(0),
+                                ],
+                                'current_retry' => [
+                                    new Assert\NotBlank(),
+                                    new Assert\Type('int'),
+                                    new Assert\GreaterThanOrEqual(0),
+                                ]
+                            ]
+                        )
+                    ]
                 ]
             ),
         ];
