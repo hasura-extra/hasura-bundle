@@ -83,6 +83,21 @@ final class EventRequestValidator extends AbstractRequestValidator
                                     new Assert\NotNull(),
                                     new Assert\Type('array'),
                                 ],
+                                'trace_context' => [
+                                    new Assert\NotBlank(),
+                                    new Assert\Collection(
+                                        [
+                                            'trace_id' => [
+                                                new Assert\NotBlank(allowNull: true),
+                                                new Assert\Type('string'),
+                                            ],
+                                            'span_id' => [
+                                                new Assert\NotBlank(allowNull: true),
+                                                new Assert\Type('string'),
+                                            ]
+                                        ]
+                                    )
+                                ]
                             ]
                         ),
                     ],
