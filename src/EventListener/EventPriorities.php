@@ -8,21 +8,25 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener\Action;
+namespace VXM\Hasura\EventListener;
 
-use VXM\Hasura\EventListener\AbstractEventPriorities;
-
-final class EventPriorities extends AbstractEventPriorities
+final class EventPriorities
 {
     // kernel.request
+    public const PRE_RESOLVE_REQUEST = 17;
+    public const POST_RESOLVE_REQUEST = 15;
     public const PRE_DENORMALIZE_ACTION_INPUT = 7;
     public const POST_DENORMALIZE_ACTION_INPUT = 5;
     public const PRE_ACTION_INPUT_VALIDATE = 5;
     public const POST_ACTION_INPUT_VALIDATE = 3;
-    public const PRE_RESOLVE_ACTION = 3;
-    public const POST_RESOLVE_ACTION = 1;
+    public const PRE_HANDLER = 3;
+    public const POST_HANDLER = 1;
 
     // kernel.view
     public const PRE_NORMALIZE_ACTION_OUTPUT = 17;
     public const POST_NORMALIZE_ACTION_OUTPUT = 15;
+    public const PRE_RESPOND = 9;
+
+    // kernel.respond
+    public const POST_RESPOND = 0;
 }

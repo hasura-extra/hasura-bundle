@@ -12,8 +12,7 @@ namespace VXM\Hasura;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use VXM\Hasura\DependencyInjection\Compiler\ActionPass;
-use VXM\Hasura\DependencyInjection\Compiler\EventTriggerPass;
+use VXM\Hasura\DependencyInjection\Compiler\HandlerPass;
 
 final class HasuraBundle extends Bundle
 {
@@ -21,7 +20,6 @@ final class HasuraBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new ActionPass());
-        $container->addCompilerPass(new EventTriggerPass());
+        $container->addCompilerPass(new HandlerPass());
     }
 }

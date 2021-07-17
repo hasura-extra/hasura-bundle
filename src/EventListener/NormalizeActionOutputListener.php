@@ -8,36 +8,37 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener\Action;
+namespace VXM\Hasura\EventListener;
 
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
-use VXM\Hasura\Action\Action;
+use VXM\Hasura\Handler\HandlerDescriptor;
 
 final class NormalizeActionOutputListener
 {
+    use RequestAttributeExtractionTrait;
+
     public function __construct(private SerializerInterface $serializer)
     {
     }
 
     public function onKernelView(ViewEvent $event): void
     {
-        $request = $event->getRequest();
-        /** @var Action $action */
-        $action = $request->attributes->get('_hasura_action');
+        $attributes = $this->extractAttributes($event->getRequest(), 'action');
 
-        if (null === $action) {
+        if (null === $attributes) {
             return;
         }
 
-        $metadata = $action->getMetadata();
+        /** @var HandlerDescriptor $descriptor */
+        [$descriptor,] = $attributes;
         $controllerResult = $event->getControllerResult();
 
         if (!is_array($controllerResult)) {
             $controllerResult = $this->serializer->normalize(
                 $controllerResult,
                 'json',
-                $metadata->getNormalizeContext()
+                $descriptor->getAttribute('normalizeContext') ?? []
             );
 
             $event->setControllerResult($controllerResult);

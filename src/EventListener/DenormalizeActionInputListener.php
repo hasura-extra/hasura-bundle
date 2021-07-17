@@ -8,13 +8,15 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener\Action;
+namespace VXM\Hasura\EventListener;
 
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class DenormalizeActionInputListener
 {
+    use RequestAttributeExtractionTrait;
+
     public function __construct(private SerializerInterface $serializer)
     {
     }
@@ -22,23 +24,24 @@ final class DenormalizeActionInputListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $attributes = $request->attributes;
-        $action = $attributes->get('_hasura_action');
-        $input = $attributes->get('_hasura_input');
+        $attributes = $this->extractAttributes($request, 'action');
 
-        if (null === $action || null === $input) {
+        if (null === $attributes) {
             return;
         }
 
-        $metadata = $action->getMetadata();
+        [$descriptor, $data] = $attributes;
 
-        if (null !== $metadata->getInputClass()) {
-            $input = $this->serializer->denormalize(
-                $input,
-                $metadata->getInputClass(),
-                context: $metadata->getDenormalizeContext()
+        $inputClass = $descriptor->getAttribute('inputClass');
+
+        if (null !== $inputClass) {
+            $data['input'] = $this->serializer->denormalize(
+                $data['input'],
+                $inputClass,
+                context: $descriptor->getAttribute('denormalizeContext') ?? []
             );
-            $request->attributes->set('_hasura_action_input', $input);
+
+            $request->attributes->set('_hasura_request_data', $data);
         }
     }
 }

@@ -8,12 +8,9 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Attribute;
+namespace VXM\Hasura\Handler;
 
-#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]
-final class AsHasuraEventHandler
+interface ActionHandlerInterface
 {
-    public function __construct(public string $triggerName)
-    {
-    }
+    public function handle(string $action, array | object $input, array $sessionVariables): array | object;
 }

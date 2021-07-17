@@ -8,16 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventTrigger;
+namespace VXM\Hasura\Attribute;
 
-final class Metadata
+abstract class AbstractAsHandler
 {
-    public function __construct(private string $triggerName)
+    public function __construct(public string $name)
     {
-    }
-
-    public function getTriggerName(): string
-    {
-        return $this->triggerName;
     }
 }

@@ -10,24 +10,22 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\EventListener\Action\ActionInputValidateListener;
-use VXM\Hasura\EventListener\Action\DenormalizeActionInputListener;
-use VXM\Hasura\EventListener\Action\NormalizeActionOutputListener;
-use VXM\Hasura\EventListener\Action\ResolveActionListener;
-use VXM\Hasura\EventListener\EventTrigger\HandleEventListener;
+use VXM\Hasura\EventListener\ActionInputValidateListener;
+use VXM\Hasura\EventListener\DenormalizeActionInputListener;
 use VXM\Hasura\EventListener\ExceptionListener;
-use VXM\Hasura\EventListener\NormalizeRequestListener;
+use VXM\Hasura\EventListener\HandlerListener;
+use VXM\Hasura\EventListener\NormalizeActionOutputListener;
+use VXM\Hasura\EventListener\ResolveRequestListener;
 use VXM\Hasura\EventListener\RespondListener;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.event_listener.normalize_request', NormalizeRequestListener::class)
+        ->set('vxm.hasura.event_listener.resolve_request', ResolveRequestListener::class)
             ->args(
                 [
                     service('vxm.hasura.validation.chain_request_validator'),
-                    service('vxm.hasura.action.manager'),
-                    service('vxm.hasura.event_trigger.manager'),
+                    service('vxm.hasura.handler.locator'),
                 ]
             )
             ->tag(
@@ -66,16 +64,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => 4,
                 ]
             )
-        ->set('vxm.hasura.event_listener.resolve_action', ResolveActionListener::class)
-            ->tag(
-                'kernel.event_listener',
-                [
-                    'event' => 'kernel.request',
-                    'method' => 'onKernelRequest',
-                    'priority' => 2,
-                ]
-            )
-        ->set('vxm.hasura.event_listener.handle_event', HandleEventListener::class)
+        ->set('vxm.hasura.event_listener.handler', HandlerListener::class)
             ->tag(
                 'kernel.event_listener',
                 [
@@ -107,7 +96,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => 8,
                 ]
             )
-        ->set('vxm.hasura.event_listener.action_input_validation_exception', ExceptionListener::class)
+        ->set('vxm.hasura.event_listener.exception', ExceptionListener::class)
             ->tag(
                 'kernel.event_listener',
                 [

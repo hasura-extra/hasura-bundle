@@ -10,32 +10,25 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\EventTrigger\EventTrigger;
-use VXM\Hasura\EventTrigger\EventTriggerManager;
-use VXM\Hasura\EventTrigger\Metadata;
+use VXM\Hasura\Handler\HandlerDescriptor;
+use VXM\Hasura\Handler\HandlersLocator;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.event_trigger.manager', EventTriggerManager::class)
+        ->set('vxm.hasura.handler.locator', HandlersLocator::class)
             ->args(
                 [
-                    abstract_arg('event triggers'),
+                    abstract_arg('action descriptors'),
+                    abstract_arg('event descriptors'),
                 ]
             )
-        ->set('vxm.hasura.event_trigger.metadata', Metadata::class)
+        ->set('vxm.hasura.handler.descriptor', HandlerDescriptor::class)
             ->abstract()
             ->args(
                 [
-                    abstract_arg('trigger name'),
-                ]
-            )
-        ->set('vxm.hasura.event_trigger.trigger', EventTrigger::class)
-            ->abstract()
-            ->args(
-                [
-                    abstract_arg('metadata'),
                     abstract_arg('handler'),
+                    abstract_arg('attributes'),
                 ]
             )
     ;

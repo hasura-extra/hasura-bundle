@@ -8,17 +8,17 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventTrigger;
+namespace VXM\Hasura\Handler;
 
 use Symfony\Component\Uid\Uuid;
 
-interface HandlerInterface
+interface EventHandlerInterface
 {
     public function handle(
         Uuid $id,
         string $triggerName,
         string $op,
-        array $tables,
+        array $table,
         array $data,
         array $sessionVariables,
         \DateTimeImmutable $createdAt,

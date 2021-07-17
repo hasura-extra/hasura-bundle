@@ -12,9 +12,9 @@ namespace VXM\Hasura\Validation;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class EventTriggerRequestValidator extends AbstractRequestValidator
+final class EventRequestValidator extends AbstractRequestValidator
 {
-    public const TYPE = 'event_trigger';
+    public const TYPE = 'event';
 
     protected function getConstraints(): array
     {

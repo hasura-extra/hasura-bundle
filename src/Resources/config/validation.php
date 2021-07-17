@@ -13,8 +13,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use VXM\Hasura\Validation\AbstractRequestValidator;
 use VXM\Hasura\Validation\ActionRequestValidator;
 use VXM\Hasura\Validation\ChainRequestValidator;
-use VXM\Hasura\Validation\EventTriggerRequestValidator;
-use VXM\Hasura\Validation\RequestValidatorInterface;
+use VXM\Hasura\Validation\EventRequestValidator;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
@@ -28,7 +27,7 @@ return static function (ContainerConfigurator $configurator) {
             )
         ->set('vxm.hasura.validation.action_request_validator', ActionRequestValidator::class)
             ->parent('vxm.hasura.validation.request_validator')
-        ->set('vxm.hasura.validation.event_trigger_request_validator', EventTriggerRequestValidator::class)
+        ->set('vxm.hasura.validation.event_request_validator', EventRequestValidator::class)
             ->parent('vxm.hasura.validation.request_validator')
         ->set('vxm.hasura.validation.chain_request_validator', ChainRequestValidator::class)
             ->args(
@@ -41,6 +40,5 @@ return static function (ContainerConfigurator $configurator) {
                     ),
                 ]
             )
-        ->alias(RequestValidatorInterface::class, 'vxm.hasura.validation.chain_request_validator')
     ;
 };

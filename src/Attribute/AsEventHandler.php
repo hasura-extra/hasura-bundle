@@ -11,14 +11,6 @@ declare(strict_types=1);
 namespace VXM\Hasura\Attribute;
 
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]
-final class AsHasuraActionResolver
+final class AsEventHandler extends AbstractAsHandler
 {
-    public function __construct(
-        public string $actionName,
-        public ?string $inputClass = null,
-        public array $denormalizeContext = [],
-        public bool $validate = true,
-        public array $normalizeContext = [],
-    ) {
-    }
 }

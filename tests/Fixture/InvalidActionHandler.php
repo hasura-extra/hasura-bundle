@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\Tests\Fixture;
 
-use VXM\Hasura\Attribute\AsHasuraEventHandler;
+use VXM\Hasura\Attribute\AsActionHandler;
 
-#[AsHasuraEventHandler(triggerName: "test")]
-final class InvalidHandler
+#[AsActionHandler(name: 'test')]
+final class InvalidActionHandler
 {
 }
