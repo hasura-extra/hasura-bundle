@@ -88,16 +88,16 @@ final class EventRequestValidator extends AbstractRequestValidator
                                     new Assert\Collection(
                                         [
                                             'trace_id' => [
-                                                new Assert\NotBlank(allowNull: true),
+                                                new Assert\NotBlank(),
                                                 new Assert\Type('string'),
                                             ],
                                             'span_id' => [
-                                                new Assert\NotBlank(allowNull: true),
+                                                new Assert\NotBlank(),
                                                 new Assert\Type('string'),
-                                            ]
+                                            ],
                                         ]
-                                    )
-                                ]
+                                    ),
+                                ],
                             ]
                         ),
                     ],
@@ -114,10 +114,10 @@ final class EventRequestValidator extends AbstractRequestValidator
                                     new Assert\NotBlank(),
                                     new Assert\Type('int'),
                                     new Assert\GreaterThanOrEqual(0),
-                                ]
+                                ],
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ]
             ),
         ];
