@@ -33,30 +33,32 @@ final class ActionInputListener
         }
 
         [$descriptor, $data] = $attributes;
-
         $inputClass = $descriptor->getAttribute('inputClass');
+
+        if (null === $inputClass) {
+            return;
+        }
+
+        $input = $data['input'] = $this->serializer->denormalize(
+            $data['input'],
+            $inputClass,
+            context: $descriptor->getAttribute('denormalizeContext') ?? []
+        );
+
+        $request->attributes->set('_hasura_request_data', $data);
+
         $validate = $descriptor->getAttribute('validate');
 
-        if (null !== $inputClass) {
-            $input = $data['input'] = $this->serializer->denormalize(
-                $data['input'],
-                $inputClass,
-                context: $descriptor->getAttribute('denormalizeContext') ?? []
-            );
+        if (!$validate) {
+            return;
+        }
 
-            $request->attributes->set('_hasura_request_data', $data);
+        $violations = $this->validator->validate($input);
 
-            if (!$validate) {
-                return;
-            }
+        if (count($violations) > 0) {
+            $violation = $violations->get(0);
 
-            $violations = $this->validator->validate($input);
-
-            if (count($violations) > 0) {
-                $violation = $violations->get(0);
-
-                throw new ViolationHttpException($violation);
-            }
+            throw new ViolationHttpException($violation);
         }
     }
 }
