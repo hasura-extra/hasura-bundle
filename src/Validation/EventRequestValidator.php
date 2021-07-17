@@ -28,7 +28,7 @@ final class EventRequestValidator extends AbstractRequestValidator
                     ],
                     'created_at' => [
                         new Assert\NotBlank(),
-                        new Assert\DateTime(),
+                        new Assert\Type('string'),
                     ],
                     'trigger' => [
                         new Assert\NotBlank(),
