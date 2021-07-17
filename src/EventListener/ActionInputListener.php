@@ -26,7 +26,7 @@ final class ActionInputListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $attributes = $this->extractAttributes($request, 'action');
+        $attributes = $this->extractAttributes($request->attributes, 'action');
 
         if (null === $attributes) {
             return;

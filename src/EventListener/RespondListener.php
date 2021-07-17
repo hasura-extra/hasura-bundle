@@ -16,12 +16,13 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 final class RespondListener
 {
+    use RequestAttributeExtractionTrait;
+
     public function onKernelView(ViewEvent $event)
     {
-        $attributes = $event->getRequest()->attributes;
-        $type = $attributes->get('_hasura');
+        $attributes = $this->extractAttributes($event->getRequest()->attributes);
 
-        if (null === $type) {
+        if (null === $attributes) {
             return;
         }
 

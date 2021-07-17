@@ -24,7 +24,7 @@ final class ActionOutputListener
 
     public function onKernelView(ViewEvent $event): void
     {
-        $attributes = $this->extractAttributes($event->getRequest(), 'action');
+        $attributes = $this->extractAttributes($event->getRequest()->attributes, 'action');
 
         if (null === $attributes) {
             return;

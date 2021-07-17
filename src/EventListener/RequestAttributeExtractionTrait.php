@@ -10,18 +10,18 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\EventListener;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * @internal
  */
 trait RequestAttributeExtractionTrait
 {
-    private function extractAttributes(Request $request, string $expectedType = null): ?array
+    private function extractAttributes(ParameterBag $attributes, string $expectedType = null): ?array
     {
-        $type = $request->attributes->get('_hasura');
-        $descriptor = $request->attributes->get('_hasura_handler_descriptor');
-        $data = $request->attributes->get('_hasura_request_data');
+        $type = $attributes->get('_hasura');
+        $descriptor = $attributes->get('_hasura_handler_descriptor');
+        $data = $attributes->get('_hasura_request_data');
 
         if (null === $type || null === $data || null === $descriptor) {
             return null;

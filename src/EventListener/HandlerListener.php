@@ -21,7 +21,7 @@ final class HandlerListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        $attributes = $this->extractAttributes($request);
+        $attributes = $this->extractAttributes($request->attributes);
 
         if (null === $attributes) {
             return;
