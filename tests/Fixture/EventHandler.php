@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\Tests\Fixture;
 
-use Symfony\Component\Uid\Uuid;
 use VXM\Hasura\Attribute\AsEventHandler;
 use VXM\Hasura\Handler\EventHandlerInterface;
 
@@ -18,13 +17,12 @@ use VXM\Hasura\Handler\EventHandlerInterface;
 final class EventHandler implements EventHandlerInterface
 {
     public function handle(
-        Uuid $id,
-        string $triggerName,
-        string $op,
+        string $name,
+        string $id,
         array $table,
-        array $data,
-        array $sessionVariables,
-        \DateTimeImmutable $createdAt,
+        array $event,
+        string $createdAt,
+        array $deliveryInfo
     ): void {
     }
 }
