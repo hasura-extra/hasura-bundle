@@ -35,7 +35,7 @@ return static function (ContainerConfigurator $configurator) {
                     iterator(
                         [
                             service('vxm.hasura.validation.action_request_validator'),
-                            service('vxm.hasura.validation.event_trigger_request_validator'),
+                            service('vxm.hasura.validation.event_request_validator'),
                         ]
                     ),
                 ]
