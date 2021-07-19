@@ -61,7 +61,7 @@ final class MakeEventHandler extends AbstractMaker
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
         $event = $input->getArgument('event');
-        $namespacePrefix = sprintf('HasuraEvent\\%s\\', u($input->getArgument($event))->title()->toString());
+        $namespacePrefix = sprintf('HasuraEvent\\%s\\', u($event)->title()->toString());
         $classDetail = $generator->createClassNameDetails(
             'Handler',
             $namespacePrefix,
