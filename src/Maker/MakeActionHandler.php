@@ -66,7 +66,8 @@ final class MakeActionHandler extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $namespacePrefix = sprintf('ActionHandler\\%s\\', u($input->getArgument('action'))->title()->toString());
+        $action = $input->getArgument('action');
+        $namespacePrefix = sprintf('HasuraAction\\%s\\', u($action)->title()->toString());
         $classDetail = $generator->createClassNameDetails(
             'Handler',
             $namespacePrefix,
@@ -77,6 +78,7 @@ final class MakeActionHandler extends AbstractMaker
             $classDetail->getFullName(),
             __DIR__ . '/Resources/skeleton/ActionHandler.tpl.php',
             [
+                'action' => $action,
                 'io' => $ioOpt,
             ]
         );
