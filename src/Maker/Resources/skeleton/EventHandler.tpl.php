@@ -5,7 +5,7 @@ namespace <?= $namespace ?>;
 use VXM\Hasura\Attribute\AsEventHandler;
 use VXM\Hasura\Handler\EventHandlerInterface;
 
-#[AsEventHandler(name: <?= "'$class_name'"; ?>)]
+#[AsEventHandler(name: <?= "'$event'"; ?>)]
 final class <?= $class_name ?> implements EventHandlerInterface
 {
     /**

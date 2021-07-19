@@ -60,7 +60,8 @@ final class MakeEventHandler extends AbstractMaker
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
-        $namespacePrefix = sprintf('EventHandler\\%s\\', u($input->getArgument('event'))->title()->toString());
+        $event = $input->getArgument('event');
+        $namespacePrefix = sprintf('HasuraEvent\\%s\\', u($input->getArgument($event))->title()->toString());
         $classDetail = $generator->createClassNameDetails(
             'Handler',
             $namespacePrefix,
@@ -68,6 +69,9 @@ final class MakeEventHandler extends AbstractMaker
         $generator->generateClass(
             $classDetail->getFullName(),
             __DIR__ . '/Resources/skeleton/EventHandler.tpl.php',
+            [
+                'event' => $event
+            ]
         );
 
         $generator->writeChanges();
