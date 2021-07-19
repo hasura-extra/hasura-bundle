@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->append([__FILE__]);
+    ->append([__FILE__])
+    ->exclude(
+        [
+            'src/Maker/Resources/skeleton',
+            'src/Resources/config',
+        ]
+    );
 
 return (new PhpCsFixer\Config())
     ->setUsingCache(true)

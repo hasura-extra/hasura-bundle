@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\DependencyInjection;
 
+use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +29,10 @@ final class HasuraExtension extends Extension
         $loader->load('controller.php');
         $loader->load('event_listener.php');
         $loader->load('validation.php');
+
+        if (class_exists(MakerBundle::class)) {
+            $loader->load('maker.php');
+        }
 
         $this->registerAttributesForAutoconfiguration($container);
     }
