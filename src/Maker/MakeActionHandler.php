@@ -71,17 +71,17 @@ final class MakeActionHandler extends AbstractMaker
             'Handler',
             $namespacePrefix,
         );
-        $ioOpt = $input->getOption('no-io');
+        $ioOpt = !$input->getOption('no-io');
 
         $generator->generateClass(
             $classDetail->getFullName(),
             __DIR__ . '/Resources/skeleton/ActionHandler.tpl.php',
             [
-                'io' => !$ioOpt,
+                'io' => $ioOpt,
             ]
         );
 
-        if (!$ioOpt) {
+        if ($ioOpt) {
             foreach (['Input', 'Output'] as $name) {
                 $ioClassDetail = $generator->createClassNameDetails(
                     $name,
