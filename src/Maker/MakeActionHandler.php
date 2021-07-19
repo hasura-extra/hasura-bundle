@@ -44,7 +44,7 @@ final class MakeActionHandler extends AbstractMaker
         $command->addOption(
             'no-io',
             mode: InputOption::VALUE_NONE,
-            description: 'Generate input & output class for action handler'
+            description: 'Do not generate input & output class for action handler'
         );
         $command->setHelp(file_get_contents(__DIR__ . '/Resources/help/MakeActionHandler.txt'));
     }
