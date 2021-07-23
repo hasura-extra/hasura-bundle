@@ -16,30 +16,24 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 
 final class RespondListener
 {
-    use RequestAttributeExtractionTrait;
-
     public function onKernelView(ViewEvent $event)
     {
-        $attributes = $this->extractAttributes($event->getRequest()->attributes);
+        $type = $event->getRequest()->attributes->get('_hasura');
 
-        if (null === $attributes) {
+        if (null === $type) {
             return;
         }
 
         $controllerResult = $event->getControllerResult();
 
         if ($controllerResult instanceof Response) {
-            $event->setResponse($controllerResult);
-
-            return;
+            $response = $controllerResult;
+        } elseif (is_array($controllerResult)) {
+            $response = new JsonResponse($controllerResult, 200);
+        } else {
+            $response = new Response($controllerResult, 200);
         }
 
-        if (is_array($controllerResult)) {
-            $event->setResponse(new JsonResponse($controllerResult, 200));
-
-            return;
-        }
-
-        $event->setResponse(new Response($controllerResult, 200));
+        $event->setResponse($response);
     }
 }
