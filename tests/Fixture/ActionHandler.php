@@ -16,8 +16,12 @@ use VXM\Hasura\Handler\ActionHandlerInterface;
 #[AsActionHandler(name: 'test')]
 final class ActionHandler implements ActionHandlerInterface
 {
-    public function handle(string $action, object | array $input, array $sessionVariables): array | object
+    use HandleRequestTestTrait;
+
+    public function handle(string $action, object|array $input, array $sessionVariables): array|object
     {
-        return ['ok'];
+        $this->requestTest->attributes->set('_action_handled', [$action, $input, $sessionVariables]);
+
+        return [];
     }
 }
