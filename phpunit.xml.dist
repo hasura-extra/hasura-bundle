@@ -2,7 +2,6 @@
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd" backupGlobals="false" bootstrap="vendor/autoload.php" colors="true">
     <php>
-        <env name="KERNEL_CLASS" value="Istio\Symfony\JWTAuthentication\Tests\TestKernel" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <ini name="error_reporting" value="-1" />
