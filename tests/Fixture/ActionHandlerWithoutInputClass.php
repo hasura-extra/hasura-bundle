@@ -13,11 +13,11 @@ namespace VXM\Hasura\Tests\Fixture;
 use VXM\Hasura\Attribute\AsActionHandler;
 use VXM\Hasura\Handler\ActionHandlerInterface;
 
-#[AsActionHandler(name: 'test', inputClass: ActionInput::class)]
-final class ActionHandler implements ActionHandlerInterface
+#[AsActionHandler(name: 'testWithoutInputClass')]
+final class ActionHandlerWithoutInputClass implements ActionHandlerInterface
 {
     public function handle(string $action, object|array $input, array $sessionVariables): array|object
     {
-        return new ActionOutput();
+        return $input;
     }
 }
