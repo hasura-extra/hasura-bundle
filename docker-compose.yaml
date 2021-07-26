@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+
+  hasura:
+    image: hasura/graphql-engine:v2.0.3
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://test:test@postgres:5432/test
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: test
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp

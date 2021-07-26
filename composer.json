@@ -1,6 +1,6 @@
 {
   "name": "hasura/core-bundle",
-  "description": "Core bundle help your app interact with Hasura action & event & metadata.",
+  "description": "Core bundle help your app interact with Hasura action & event & api.",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [
@@ -16,6 +16,7 @@
   "require": {
     "php": ">=8.0",
     "symfony/framework-bundle": "^5.3",
+    "symfony/http-client": "^5.3",
     "symfony/serializer-pack": "^1.0",
     "symfony/validator": "^5.3"
   },
