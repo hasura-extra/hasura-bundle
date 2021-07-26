@@ -26,7 +26,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "VXM\\Hasura\\Tests\\": "tests"
+      "VXM\\Hasura\\Tests\\": "tests",
+      "App\\": "tests/.kernel/temp/app/"
     }
   },
   "require-dev": {

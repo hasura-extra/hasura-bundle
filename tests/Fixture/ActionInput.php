@@ -11,14 +11,9 @@ declare(strict_types=1);
 namespace VXM\Hasura\Tests\Fixture;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 final class ActionInput
 {
+    #[Assert\NotBlank()]
     public $test;
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('test', new Assert\NotBlank());
-    }
 }

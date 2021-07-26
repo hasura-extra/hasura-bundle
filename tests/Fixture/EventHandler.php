@@ -10,15 +10,12 @@ declare(strict_types=1);
 
 namespace VXM\Hasura\Tests\Fixture;
 
-use Symfony\Component\HttpFoundation\Request;
 use VXM\Hasura\Attribute\AsEventHandler;
 use VXM\Hasura\Handler\EventHandlerInterface;
 
 #[AsEventHandler(name: 'test')]
 final class EventHandler implements EventHandlerInterface
 {
-    private Request $requestTest;
-
     public function handle(
         string $name,
         string $id,
@@ -27,21 +24,5 @@ final class EventHandler implements EventHandlerInterface
         string $createdAt,
         array $deliveryInfo
     ): void {
-        $this->requestTest->attributes->set(
-            '_event_handled',
-            [
-                $name,
-                $id,
-                $table,
-                $event,
-                $createdAt,
-                $deliveryInfo
-            ]
-        );
-    }
-
-    public function setRequestTest(Request $request)
-    {
-        $this->requestTest = $request;
     }
 }
