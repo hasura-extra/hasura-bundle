@@ -8,16 +8,16 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\DependencyInjection;
+namespace Hasura\DependencyInjection;
 
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Attribute\AsEventHandler;
 use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Attribute\AsEventHandler;
 
 final class HasuraExtension extends Extension
 {

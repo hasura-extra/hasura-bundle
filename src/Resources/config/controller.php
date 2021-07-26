@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\Controller\Placeholder;
+use Hasura\Controller\Placeholder;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator

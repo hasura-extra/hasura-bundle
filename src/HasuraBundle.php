@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura;
+namespace Hasura;
 
+use Hasura\DependencyInjection\Compiler\HandlerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use VXM\Hasura\DependencyInjection\Compiler\HandlerPass;
 
 final class HasuraBundle extends Bundle
 {

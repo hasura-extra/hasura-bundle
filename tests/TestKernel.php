@@ -8,18 +8,18 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests;
+namespace Hasura\Tests;
 
+use Hasura\HasuraBundle;
+use Hasura\Tests\Fixture\ActionHandler;
+use Hasura\Tests\Fixture\ActionHandlerWithoutInputClass;
+use Hasura\Tests\Fixture\EventHandler;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MakerBundle\MakerBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
-use VXM\Hasura\HasuraBundle;
-use VXM\Hasura\Tests\Fixture\ActionHandler;
-use VXM\Hasura\Tests\Fixture\ActionHandlerWithoutInputClass;
-use VXM\Hasura\Tests\Fixture\EventHandler;
 
 final class TestKernel extends Kernel implements CompilerPassInterface
 {
@@ -28,7 +28,7 @@ final class TestKernel extends Kernel implements CompilerPassInterface
         return [
             new FrameworkBundle(),
             new MakerBundle(),
-            new HasuraBundle()
+            new HasuraBundle(),
         ];
     }
 
@@ -59,7 +59,7 @@ final class TestKernel extends Kernel implements CompilerPassInterface
         $fixtures = [
             ActionHandler::class,
             ActionHandlerWithoutInputClass::class,
-            EventHandler::class
+            EventHandler::class,
         ];
 
         foreach ($fixtures as $fixture) {

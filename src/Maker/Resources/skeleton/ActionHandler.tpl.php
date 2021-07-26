@@ -2,8 +2,8 @@
 
 namespace <?= $namespace ?>;
 
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Handler\ActionHandlerInterface;
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Handler\ActionHandlerInterface;
 
 #[AsActionHandler(<?= sprintf("name: '%s'%s", $action, $io ? ', inputClass: Input::class' : ''); ?>)]
 final class <?= $class_name ?> implements ActionHandlerInterface

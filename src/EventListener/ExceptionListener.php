@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener;
+namespace Hasura\EventListener;
 
+use Hasura\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use VXM\Hasura\Exception\HttpExceptionInterface;
 
 final class ExceptionListener
 {

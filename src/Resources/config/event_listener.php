@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\EventListener\ActionInputListener;
-use VXM\Hasura\EventListener\ActionOutputListener;
-use VXM\Hasura\EventListener\EventPriorities;
-use VXM\Hasura\EventListener\ExceptionListener;
-use VXM\Hasura\EventListener\HandlerListener;
-use VXM\Hasura\EventListener\ResolveRequestListener;
-use VXM\Hasura\EventListener\RespondListener;
+use Hasura\EventListener\ActionInputListener;
+use Hasura\EventListener\ActionOutputListener;
+use Hasura\EventListener\EventPriorities;
+use Hasura\EventListener\ExceptionListener;
+use Hasura\EventListener\HandlerListener;
+use Hasura\EventListener\ResolveRequestListener;
+use Hasura\EventListener\RespondListener;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator

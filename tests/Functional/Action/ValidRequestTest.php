@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Action\Functional;
+namespace Hasura\Tests\Action\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -25,7 +25,7 @@ class ValidRequestTest extends WebTestCase
                 [
                     'input' => ['test' => 'not blank'],
                     'session_variables' => [],
-                    'action' => ['name' => 'test']
+                    'action' => ['name' => 'test'],
                 ]
             )
         );
@@ -45,7 +45,7 @@ class ValidRequestTest extends WebTestCase
                 [
                     'input' => ['test' => 'not blank'],
                     'session_variables' => [],
-                    'action' => ['name' => 'testWithoutInputClass']
+                    'action' => ['name' => 'testWithoutInputClass'],
                 ]
             )
         );

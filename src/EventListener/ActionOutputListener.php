@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener;
+namespace Hasura\EventListener;
 
+use Hasura\Handler\HandlerDescriptor;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Serializer\SerializerInterface;
-use VXM\Hasura\Handler\HandlerDescriptor;
 
 final class ActionOutputListener
 {

@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Action\Functional;
+namespace Hasura\Tests\Action\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,59 +39,58 @@ class BadRequestContentTest extends WebTestCase
                 [
                     'GET',
                     'application/json',
-                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']])
+                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']]),
                 ],
-                Response::HTTP_METHOD_NOT_ALLOWED
+                Response::HTTP_METHOD_NOT_ALLOWED,
             ],
             [
                 [
                     'POST',
                     'application/test',
-                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']])
+                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']]),
                 ],
-                Response::HTTP_UNSUPPORTED_MEDIA_TYPE
+                Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    json_encode(['input' => null, 'session_variables' => [], 'action' => ['name' => 'test']])
+                    json_encode(['input' => null, 'session_variables' => [], 'action' => ['name' => 'test']]),
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    json_encode(['input' => [], 'session_variables' => null, 'action' => ['name' => 'test']])
+                    json_encode(['input' => [], 'session_variables' => null, 'action' => ['name' => 'test']]),
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    json_encode(['input' => [], 'session_variables' => [], 'action' => null])
+                    json_encode(['input' => [], 'session_variables' => [], 'action' => null]),
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    ''
+                    '',
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']])
+                    json_encode(['input' => [], 'session_variables' => [], 'action' => ['name' => 'test']]),
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
         ];
     }
-
 }

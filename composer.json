@@ -1,6 +1,6 @@
 {
-  "name": "vxm/hasura-bundle",
-  "description": "Symfony bundle to help handle Hasura action & event.",
+  "name": "hasura/core-bundle",
+  "description": "Core bundle help your app interact with Hasura action & event & metadata.",
   "type": "symfony-bundle",
   "license": "MIT",
   "authors": [
@@ -21,12 +21,12 @@
   },
   "autoload": {
     "psr-4": {
-      "VXM\\Hasura\\": "src"
+      "Hasura\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "VXM\\Hasura\\Tests\\": "tests",
+      "Hasura\\Tests\\": "tests",
       "App\\": "tests/.kernel/temp/app/"
     }
   },

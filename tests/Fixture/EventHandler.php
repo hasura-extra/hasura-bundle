@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Fixture;
+namespace Hasura\Tests\Fixture;
 
-use VXM\Hasura\Attribute\AsEventHandler;
-use VXM\Hasura\Handler\EventHandlerInterface;
+use Hasura\Attribute\AsEventHandler;
+use Hasura\Handler\EventHandlerInterface;
 
 #[AsEventHandler(name: 'test')]
 final class EventHandler implements EventHandlerInterface

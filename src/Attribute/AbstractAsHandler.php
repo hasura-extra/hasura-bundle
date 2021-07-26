@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Attribute;
+namespace Hasura\Attribute;
 
 abstract class AbstractAsHandler
 {

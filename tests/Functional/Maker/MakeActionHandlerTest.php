@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Maker\Functional;
+namespace Hasura\Tests\Maker\Functional;
 
+use Hasura\Tests\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
-use VXM\Hasura\Tests\TestKernel;
 
 class MakeActionHandlerTest extends KernelTestCase
 {
@@ -74,8 +74,8 @@ class MakeActionHandlerTest extends KernelTestCase
 
 namespace App\HasuraAction\Test;
 
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Handler\ActionHandlerInterface;
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Handler\ActionHandlerInterface;
 
 #[AsActionHandler(name: 'Test', inputClass: Input::class)]
 final class Handler implements ActionHandlerInterface
@@ -116,8 +116,8 @@ EXPECTED;
 
 namespace App\HasuraAction\Test;
 
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Handler\ActionHandlerInterface;
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Handler\ActionHandlerInterface;
 
 #[AsActionHandler(name: 'Test')]
 final class Handler implements ActionHandlerInterface
@@ -134,5 +134,4 @@ EXPECTED;
 
         yield [['action' => 'Test', '--no-io' => true], [], $expectedHandler, null, null];
     }
-
 }
