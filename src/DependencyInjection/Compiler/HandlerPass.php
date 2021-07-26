@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\DependencyInjection\Compiler;
+namespace Hasura\DependencyInjection\Compiler;
 
+use Hasura\Handler\ActionHandlerInterface;
+use Hasura\Handler\EventHandlerInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use VXM\Hasura\Handler\ActionHandlerInterface;
-use VXM\Hasura\Handler\EventHandlerInterface;
 
 final class HandlerPass implements CompilerPassInterface
 {

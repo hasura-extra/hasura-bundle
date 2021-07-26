@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\Maker\MakeActionHandler;
-use VXM\Hasura\Maker\MakeEventHandler;
+use Hasura\Maker\MakeActionHandler;
+use Hasura\Maker\MakeEventHandler;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator

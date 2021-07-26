@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Controller;
+namespace Hasura\Controller;
 
 final class Placeholder
 {

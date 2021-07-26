@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Event\Functional;
+namespace Hasura\Tests\Event\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -24,7 +24,7 @@ class ValidRequestTest extends WebTestCase
             content: json_encode(
                 [
                     'trigger' => [
-                        'name' => 'test'
+                        'name' => 'test',
                     ],
                     'id' => '123e4567-e89b-12d3-a456-556642440000',
                     'table' => ['schema' => 'public', 'name' => 'abc'],
@@ -32,13 +32,13 @@ class ValidRequestTest extends WebTestCase
                         'op' => 'UPDATE',
                         'data' => [
                             'old' => ['test' => null],
-                            'new' => ['test' => 'test']
+                            'new' => ['test' => 'test'],
                         ],
                         'session_variables' => [],
-                        'trace_context' => null
+                        'trace_context' => null,
                     ],
                     'delivery_info' => ['max_retries' => 0, 'current_retry' => 0],
-                    'created_at' => '1'
+                    'created_at' => '1',
                 ]
             )
         );

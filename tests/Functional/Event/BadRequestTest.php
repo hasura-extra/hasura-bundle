@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Event\Functional;
+namespace Hasura\Tests\Event\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,25 +39,25 @@ class BadRequestContentTest extends WebTestCase
                 [
                     'GET',
                     'application/json',
-                    ''
+                    '',
                 ],
-                Response::HTTP_METHOD_NOT_ALLOWED
+                Response::HTTP_METHOD_NOT_ALLOWED,
             ],
             [
                 [
                     'POST',
                     'application/test',
-                    ''
+                    '',
                 ],
-                Response::HTTP_UNSUPPORTED_MEDIA_TYPE
+                Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
             ],
             [
                 [
                     'POST',
                     'application/json',
-                    ''
+                    '',
                 ],
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_BAD_REQUEST,
             ],
             [
                 [
@@ -72,13 +72,12 @@ class BadRequestContentTest extends WebTestCase
                                 'new' => null,
                             ],
                             'delivery_info' => [],
-                            'created_at' => '1'
+                            'created_at' => '1',
                         ]
-                    )
+                    ),
                 ],
-                Response::HTTP_BAD_REQUEST
-            ]
+                Response::HTTP_BAD_REQUEST,
+            ],
         ];
     }
-
 }

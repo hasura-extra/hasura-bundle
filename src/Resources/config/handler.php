@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\Handler\HandlerDescriptor;
-use VXM\Hasura\Handler\HandlersLocator;
+use Hasura\Handler\HandlerDescriptor;
+use Hasura\Handler\HandlersLocator;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator

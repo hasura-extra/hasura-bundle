@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Handler;
+namespace Hasura\Handler;
 
 interface ActionHandlerInterface
 {

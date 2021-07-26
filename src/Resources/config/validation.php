@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use VXM\Hasura\Validation\AbstractRequestValidator;
-use VXM\Hasura\Validation\ActionRequestValidator;
-use VXM\Hasura\Validation\ChainRequestValidator;
-use VXM\Hasura\Validation\EventRequestValidator;
+use Hasura\Validation\AbstractRequestValidator;
+use Hasura\Validation\ActionRequestValidator;
+use Hasura\Validation\ChainRequestValidator;
+use Hasura\Validation\EventRequestValidator;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator

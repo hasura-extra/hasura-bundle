@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Maker;
+namespace Hasura\Maker;
 
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
@@ -70,7 +70,7 @@ final class MakeEventHandler extends AbstractMaker
             $classDetail->getFullName(),
             __DIR__ . '/Resources/skeleton/EventHandler.tpl.php',
             [
-                'event' => $event
+                'event' => $event,
             ]
         );
 

@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Fixture;
+namespace Hasura\Tests\Fixture;
 
 final class ActionOutput
 {

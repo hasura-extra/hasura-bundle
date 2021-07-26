@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Fixture;
+namespace Hasura\Tests\Fixture;
 
-use VXM\Hasura\Attribute\AsActionHandler;
+use Hasura\Attribute\AsActionHandler;
 
 #[AsActionHandler(name: 'test')]
 final class InvalidActionHandler

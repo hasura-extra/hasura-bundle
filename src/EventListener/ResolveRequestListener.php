@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener;
+namespace Hasura\EventListener;
 
+use Hasura\Handler\HandlersLocator;
+use Hasura\Validation\RequestValidatorInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use VXM\Hasura\Handler\HandlersLocator;
-use VXM\Hasura\Validation\RequestValidatorInterface;
 
 final class ResolveRequestListener
 {

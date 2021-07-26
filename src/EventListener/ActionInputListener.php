@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener;
+namespace Hasura\EventListener;
 
+use Hasura\Validation\ViolationHttpException;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use VXM\Hasura\Validation\ViolationHttpException;
 
 final class ActionInputListener
 {

@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\EventListener;
+namespace Hasura\EventListener;
 
+use Hasura\Handler\ActionHandlerInterface;
+use Hasura\Handler\HandlerDescriptor;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use VXM\Hasura\Handler\ActionHandlerInterface;
-use VXM\Hasura\Handler\HandlerDescriptor;
 
 final class HandlerListener
 {

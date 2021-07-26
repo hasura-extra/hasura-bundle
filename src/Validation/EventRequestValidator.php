@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Validation;
+namespace Hasura\Validation;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

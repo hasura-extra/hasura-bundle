@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Functional;
+namespace Hasura\Tests\Functional;
 
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Attribute\AsEventHandler;
+use Hasura\DependencyInjection\HasuraExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Attribute\AsEventHandler;
-use VXM\Hasura\DependencyInjection\HasuraExtension;
 
 class HasuraBundleTest extends TestCase
 {

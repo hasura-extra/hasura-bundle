@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Validation;
+namespace Hasura\Validation;
 
+use Hasura\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\ConstraintViolation;
-use VXM\Hasura\Exception\HttpExceptionInterface;
 
 final class ViolationHttpException extends BadRequestHttpException implements HttpExceptionInterface
 {

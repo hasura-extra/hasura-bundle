@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Fixture;
+namespace Hasura\Tests\Fixture;
 
-use VXM\Hasura\Attribute\AsActionHandler;
-use VXM\Hasura\Handler\ActionHandlerInterface;
+use Hasura\Attribute\AsActionHandler;
+use Hasura\Handler\ActionHandlerInterface;
 
 #[AsActionHandler(name: 'testWithoutInputClass')]
 final class ActionHandlerWithoutInputClass implements ActionHandlerInterface
 {
-    public function handle(string $action, object|array $input, array $sessionVariables): array|object
+    public function handle(string $action, object | array $input, array $sessionVariables): array | object
     {
         return $input;
     }

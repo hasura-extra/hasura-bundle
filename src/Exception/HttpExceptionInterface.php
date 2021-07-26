@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Exception;
+namespace Hasura\Exception;
 
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface as BaseHttpExceptionInterface;
 

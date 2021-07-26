@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace VXM\Hasura\Tests\Maker\Functional;
+namespace Hasura\Tests\Maker\Functional;
 
+use Hasura\Tests\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
-use VXM\Hasura\Tests\TestKernel;
 
 class MakeEventHandlerTest extends KernelTestCase
 {
@@ -62,8 +62,8 @@ class MakeEventHandlerTest extends KernelTestCase
 
 namespace App\HasuraEvent\Test;
 
-use VXM\Hasura\Attribute\AsEventHandler;
-use VXM\Hasura\Handler\EventHandlerInterface;
+use Hasura\Attribute\AsEventHandler;
+use Hasura\Handler\EventHandlerInterface;
 
 #[AsEventHandler(name: 'Test')]
 final class Handler implements EventHandlerInterface
@@ -80,5 +80,4 @@ EXPECTED;
         yield [['event' => 'Test'], [], $expectedHandler];
         yield [[], ['event' => 'Test'], $expectedHandler];
     }
-
 }
