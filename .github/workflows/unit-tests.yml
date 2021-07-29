@@ -39,7 +39,7 @@ jobs:
       - name: "install dependencies"
         run: composer install --prefer-dist
 
-      - name: "Make Hasura metadata tests"
+      - name: "make metadata tests"
         run: sleep 10 && make metadata-test
 
       - name: "running unit tests"
