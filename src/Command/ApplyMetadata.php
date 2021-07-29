@@ -26,7 +26,11 @@ final class ApplyMetadata extends BaseMetadataCommand
     {
         parent::configure();
 
-        $this->addOption('allow-inconsistency', InputOption::VALUE_NONE);
+        $this->addOption(
+            'allow-inconsistency',
+            mode: InputOption::VALUE_NONE,
+            description: 'Allow inconsistency when apply metadata files.'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,7 +41,7 @@ final class ApplyMetadata extends BaseMetadataCommand
             $this->metadataManager->apply($input->getOption('allow-inconsistency'));
             $this->io->section('Done!');
         } catch (HttpExceptionInterface $exception) {
-            $this->io->section($exception->getMessage());
+            $this->io->section($exception->getResponse()->getContent(false));
             $this->io->error('Please check your Hasura server configuration.');
 
             return 1;

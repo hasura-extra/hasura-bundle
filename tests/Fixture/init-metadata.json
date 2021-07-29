@@ -68,6 +68,23 @@
                     }
                   }
                 }
+              ],
+              "event_triggers": [
+                {
+                  "name": "insertedUser",
+                  "definition": {
+                    "enable_manual": false,
+                    "insert": {
+                      "columns": "*"
+                    }
+                  },
+                  "retry_conf": {
+                    "num_retries": 0,
+                    "interval_sec": 10,
+                    "timeout_sec": 60
+                  },
+                  "webhook": "http://localhost/hasura_event"
+                }
               ]
             }
           ],
@@ -118,8 +135,8 @@
             "output_type": "InsertProductOutput",
             "arguments": [
               {
-                "name": "name",
-                "type": "String!"
+                "name": "object",
+                "type": "InsertProductInput!"
               }
             ],
             "type": "mutation",
@@ -128,6 +145,17 @@
         }
       ],
       "custom_types": {
+        "input_objects": [
+          {
+            "name": "InsertProductInput",
+            "fields": [
+              {
+                "name": "name",
+                "type": "String!"
+              }
+            ]
+          }
+        ],
         "objects": [
           {
             "name": "InsertProductOutput",

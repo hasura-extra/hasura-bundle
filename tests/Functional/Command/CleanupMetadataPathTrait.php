@@ -16,10 +16,10 @@ trait CleanupMetadataPathTrait
 {
     protected function tearDown(): void
     {
-//        $dir = sprintf('%s/hasura', self::bootKernel()->getProjectDir());
-//
-//        (new Filesystem())->remove($dir);
-//        (new Filesystem())->mkdir($dir);
+        $dir = sprintf('%s/hasura', self::bootKernel()->getProjectDir());
+
+        (new Filesystem())->remove($dir);
+        (new Filesystem())->mkdir($dir);
 
         parent::tearDown();
     }
