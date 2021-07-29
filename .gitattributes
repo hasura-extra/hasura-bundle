@@ -1,5 +1,8 @@
 * text=auto
 
+/docker-compose.yaml export-ignore
+/docker export-ignore
+/Makefile export-ignore
 /tests export-ignore
 /src/Resources/doc export-ignore
 /.gitattributes export-ignore
