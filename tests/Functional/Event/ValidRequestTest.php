@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Tests\Event\Functional;
+namespace Hasura\Tests\Functional\Event;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -18,24 +18,24 @@ use Hasura\Validation\EventRequestValidator;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.validation.request_validator', AbstractRequestValidator::class)
+        ->set('hasura.validation.request_validator', AbstractRequestValidator::class)
             ->abstract()
             ->args(
                 [
-                    service('vxm.hasura.validator'),
+                    service('hasura.validator'),
                 ]
             )
-        ->set('vxm.hasura.validation.action_request_validator', ActionRequestValidator::class)
-            ->parent('vxm.hasura.validation.request_validator')
-        ->set('vxm.hasura.validation.event_request_validator', EventRequestValidator::class)
-            ->parent('vxm.hasura.validation.request_validator')
-        ->set('vxm.hasura.validation.chain_request_validator', ChainRequestValidator::class)
+        ->set('hasura.validation.action_request_validator', ActionRequestValidator::class)
+            ->parent('hasura.validation.request_validator')
+        ->set('hasura.validation.event_request_validator', EventRequestValidator::class)
+            ->parent('hasura.validation.request_validator')
+        ->set('hasura.validation.chain_request_validator', ChainRequestValidator::class)
             ->args(
                 [
                     iterator(
                         [
-                            service('vxm.hasura.validation.action_request_validator'),
-                            service('vxm.hasura.validation.event_request_validator'),
+                            service('hasura.validation.action_request_validator'),
+                            service('hasura.validation.event_request_validator'),
                         ]
                     ),
                 ]

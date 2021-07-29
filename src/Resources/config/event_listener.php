@@ -21,11 +21,11 @@ use Hasura\EventListener\RespondListener;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.event_listener.resolve_request', ResolveRequestListener::class)
+        ->set('hasura.event_listener.resolve_request', ResolveRequestListener::class)
             ->args(
                 [
-                    service('vxm.hasura.validation.chain_request_validator'),
-                    service('vxm.hasura.handler.locator'),
+                    service('hasura.validation.chain_request_validator'),
+                    service('hasura.handler.locator'),
                 ]
             )
             ->tag(
@@ -36,11 +36,11 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => EventPriorities::PRE_RESOLVE_REQUEST - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.action_input', ActionInputListener::class)
+        ->set('hasura.event_listener.action_input', ActionInputListener::class)
             ->args(
                 [
-                    service('vxm.hasura.serializer'),
-                    service('vxm.hasura.validator'),
+                    service('hasura.serializer'),
+                    service('hasura.validator'),
                 ]
             )
             ->tag(
@@ -51,7 +51,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => EventPriorities::PRE_ACTION_INPUT - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.handler', HandlerListener::class)
+        ->set('hasura.event_listener.handler', HandlerListener::class)
             ->tag(
                 'kernel.event_listener',
                 [
@@ -60,10 +60,10 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => EventPriorities::PRE_HANDLER - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.action_output', ActionOutputListener::class)
+        ->set('hasura.event_listener.action_output', ActionOutputListener::class)
             ->args(
                 [
-                    service('vxm.hasura.serializer'),
+                    service('hasura.serializer'),
                 ]
             )
             ->tag(
@@ -74,7 +74,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => EventPriorities::PRE_ACTION_OUTPUT - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.respond', RespondListener::class)
+        ->set('hasura.event_listener.respond', RespondListener::class)
             ->tag(
                 'kernel.event_listener',
                 [
@@ -83,7 +83,7 @@ return static function (ContainerConfigurator $configurator) {
                     'priority' => EventPriorities::PRE_RESPOND - 1,
                 ]
             )
-        ->set('vxm.hasura.event_listener.exception', ExceptionListener::class)
+        ->set('hasura.event_listener.exception', ExceptionListener::class)
             ->tag(
                 'kernel.event_listener',
                 [

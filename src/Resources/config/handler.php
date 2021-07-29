@@ -16,14 +16,14 @@ use Hasura\Handler\HandlersLocator;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.handler.locator', HandlersLocator::class)
+        ->set('hasura.handler.locator', HandlersLocator::class)
             ->args(
                 [
                     abstract_arg('action descriptors'),
                     abstract_arg('event descriptors'),
                 ]
             )
-        ->set('vxm.hasura.handler.descriptor', HandlerDescriptor::class)
+        ->set('hasura.handler.descriptor', HandlerDescriptor::class)
             ->abstract()
             ->args(
                 [

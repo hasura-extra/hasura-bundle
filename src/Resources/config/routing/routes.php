@@ -12,12 +12,12 @@ namespace Symfony\Component\Routing\Loader\Configurator;
 
 return static function (RoutingConfigurator $configurator) {
     $configurator
-        ->add('vxm.hasura.controller.action', '/hasura_action')
-            ->controller('vxm.hasura.controller.action_placeholder')
+        ->add('hasura.controller.action', '/hasura_action')
+            ->controller('hasura.controller.action_placeholder')
             ->defaults(['_hasura' => 'action'])
             ->methods(['POST'])
-        ->add('vxm.hasura.controller.event', '/hasura_event')
-            ->controller('vxm.hasura.controller.event_placeholder')
+        ->add('hasura.controller.event', '/hasura_event')
+            ->controller('hasura.controller.event_placeholder')
             ->defaults(['_hasura' => 'event'])
             ->methods(['POST'])
     ;
