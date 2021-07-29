@@ -135,8 +135,8 @@
             "output_type": "InsertProductOutput",
             "arguments": [
               {
-                "name": "name",
-                "type": "String!"
+                "name": "object",
+                "type": "InsertProductInput!"
               }
             ],
             "type": "mutation",
@@ -145,6 +145,17 @@
         }
       ],
       "custom_types": {
+        "input_objects": [
+          {
+            "name": "InsertProductInput",
+            "fields": [
+              {
+                "name": "name",
+                "type": "String!"
+              }
+            ]
+          }
+        ],
         "objects": [
           {
             "name": "InsertProductOutput",
