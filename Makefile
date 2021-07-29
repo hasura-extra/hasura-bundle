@@ -1,3 +1,5 @@
+.PHONY: metadata-test
+
 metadata-test:
 	curl -X "POST" \
 		 -H "X-Hasura-Admin-Secret: test" \
