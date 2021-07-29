@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Tests\Maker\Functional;
+namespace Hasura\Tests\Functional\Maker;
 
 use Hasura\Tests\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -20,8 +20,9 @@ class MakeActionHandlerTest extends KernelTestCase
 {
     protected function tearDown(): void
     {
-        $kernel = self::bootKernel();
-        $dir = $kernel->getTempDir() . '/app/HasuraAction/Test';
+        parent::tearDown();
+
+        $dir =  __DIR__ . '/../../.kernel/temp/app/HasuraAction';
         (new Filesystem())->remove($dir);
     }
 

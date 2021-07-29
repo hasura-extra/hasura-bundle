@@ -19,7 +19,7 @@ final class Client
 
     private bool $hasAdminSecret;
 
-    public function __construct(string $baseUri, array $httpClientOptions = [], string $adminSecret = null)
+    public function __construct(string $baseUri, string $adminSecret = null, array $httpClientOptions = [])
     {
         $httpClientOptions['base_uri'] = $baseUri;
 

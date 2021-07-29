@@ -10,15 +10,13 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Hasura\Maker\MakeActionHandler;
-use Hasura\Maker\MakeEventHandler;
+use Hasura\ApiClient\Client;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-            ->set('hasura.maker.action_handler', MakeActionHandler::class)
-                ->tag('maker.command')
-            ->set('hasura.maker.event_handler', MakeEventHandler::class)
-                ->tag('maker.command')
+        ->set('hasura.api_client.client', Client::class)
+            ->args([param('hasura.base_uri'), abstract_arg('admin secret')])
+        ->alias(Client::class, 'hasura.api_client.client')
     ;
 };

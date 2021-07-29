@@ -24,7 +24,7 @@ final class HandlerPass implements CompilerPassInterface
     {
         $handlers = [];
 
-        foreach ($container->findTaggedServiceIds('vxm.hasura.handler') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('hasura.handler') as $id => $tags) {
             $handlerClass = $container->getDefinition($id)->getClass();
 
             foreach ($tags as ['attributes' => $attributes, 'type' => $type]) {
@@ -41,10 +41,10 @@ final class HandlerPass implements CompilerPassInterface
                     throw new InvalidConfigurationException(sprintf('%s handler `%s` should be implement `%s`, are you forget it?', ucfirst($type), $handlerClass, $handlerShouldImplement));
                 }
 
-                $handler = sprintf('vxm.hasura.handler.handler_%s_%s', $type, $name);
-                $descriptor = sprintf('vxm.hasura.handler.descriptor_%s_%s', $type, $name);
+                $handler = sprintf('hasura.handler.handler_%s_%s', $type, $name);
+                $descriptor = sprintf('hasura.handler.descriptor_%s_%s', $type, $name);
 
-                $descriptorDefinition = new ChildDefinition('vxm.hasura.handler.descriptor');
+                $descriptorDefinition = new ChildDefinition('hasura.handler.descriptor');
                 $descriptorDefinition->replaceArgument(0, new Reference($handler));
                 $descriptorDefinition->replaceArgument(1, $attributes);
 
@@ -56,7 +56,7 @@ final class HandlerPass implements CompilerPassInterface
         }
 
         $container
-            ->getDefinition('vxm.hasura.handler.locator')
+            ->getDefinition('hasura.handler.locator')
             ->replaceArgument(0, $handlers['action'] ?? [])
             ->replaceArgument(1, $handlers['event'] ?? []);
     }

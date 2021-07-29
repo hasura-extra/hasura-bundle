@@ -15,11 +15,11 @@ use Hasura\Controller\Placeholder;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->set('vxm.hasura.controller.placeholder', Placeholder::class)
+        ->set('hasura.controller.placeholder', Placeholder::class)
             ->public()
-        ->alias('vxm.hasura.controller.action_placeholder', 'vxm.hasura.controller.placeholder')
+        ->alias('hasura.controller.action_placeholder', 'hasura.controller.placeholder')
             ->public()
-        ->alias('vxm.hasura.controller.event_placeholder', 'vxm.hasura.controller.placeholder')
+        ->alias('hasura.controller.event_placeholder', 'hasura.controller.placeholder')
             ->public()
     ;
 };

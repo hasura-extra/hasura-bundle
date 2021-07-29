@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Tests\Action\Functional;
+namespace Hasura\Tests\Functional\Action;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class BadRequestContentTest extends WebTestCase
+class BadRequestTest extends WebTestCase
 {
     /**
      * @dataProvider requestInformation

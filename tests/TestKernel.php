@@ -49,6 +49,14 @@ final class TestKernel extends Kernel implements CompilerPassInterface
                     ]
                 );
 
+                $container->loadFromExtension(
+                    'hasura',
+                    [
+                        'base_uri' => 'http://localhost:8080',
+                        'admin_secret' => 'test'
+                    ]
+                );
+
                 $this->registerHandlerFixtures($container);
             }
         );
@@ -71,34 +79,26 @@ final class TestKernel extends Kernel implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        $container->getDefinition('vxm.hasura.handler.locator')->setPublic(true);
-        $container->getDefinition('vxm.hasura.handler.descriptor')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.resolve_request')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.action_input')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.handler')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.action_output')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.respond')->setPublic(true);
-        $container->getDefinition('vxm.hasura.event_listener.exception')->setPublic(true);
+        $container->getDefinition('hasura.api_client.client')->setPublic(true);
+        $container->getDefinition('hasura.command.apply_metadata')->setPublic(true);
+        $container->getDefinition('hasura.command.export_metadata')->setPublic(true);
+        $container->getDefinition('hasura.service.metadata.manager')->setPublic(true);
+        $container->getDefinition('hasura.handler.descriptor')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.resolve_request')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.action_input')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.handler')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.action_output')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.respond')->setPublic(true);
+        $container->getDefinition('hasura.event_listener.exception')->setPublic(true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCacheDir()
+    public function getProjectDir()
     {
-        return sprintf('%s/tests/.kernel/cache', $this->getProjectDir());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogDir()
-    {
-        return sprintf('%s/tests/.kernel/logs', $this->getProjectDir());
+        return sprintf('%s/.kernel', __DIR__);
     }
 
     public function getTempDir()
     {
-        return sprintf('%s/tests/.kernel/temp', $this->getProjectDir());
+        return sprintf('%s/temp', $this->getProjectDir());
     }
 }

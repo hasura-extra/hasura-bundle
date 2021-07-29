@@ -7,6 +7,8 @@ services:
       POSTGRES_DB: test
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
+    volumes:
+      - ./docker/postgres/initdb.d:/docker-entrypoint-initdb.d
     ports:
       - target: 5432
         published: 5432
@@ -15,9 +17,13 @@ services:
   hasura:
     image: hasura/graphql-engine:v2.0.3
     environment:
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DATABASE_URL: postgres://test:test@postgres:5432/test
       HASURA_GRAPHQL_DEV_MODE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: test
+      HASURA_GRAPHQL_EXPERIMENTAL_FEATURES: inherited_roles
+    depends_on:
+      - postgres
     ports:
       - target: 8080
         published: 8080

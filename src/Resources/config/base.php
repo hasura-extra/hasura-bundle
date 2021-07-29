@@ -13,7 +13,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 return static function (ContainerConfigurator $configurator) {
     $configurator
         ->services()
-        ->alias('vxm.hasura.validator', 'validator')
-        ->alias('vxm.hasura.serializer', 'serializer')
+        ->alias('hasura.validator', 'validator')
+        ->alias('hasura.serializer', 'serializer')
     ;
 };

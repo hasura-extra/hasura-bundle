@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Tests\Action\Functional;
+namespace Hasura\Tests\Functional\Action;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
