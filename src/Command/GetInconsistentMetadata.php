@@ -34,7 +34,7 @@ final class GetInconsistentMetadata extends BaseMetadataCommand
         $this->io->table(
             ['TYPE', 'NAME', 'REASON'],
             array_map(
-                fn($item) => [$item['type'], $item['name'], $item['reason']],
+                fn ($item) => [$item['type'], $item['name'], $item['reason']],
                 $data['inconsistent_objects']
             )
         );

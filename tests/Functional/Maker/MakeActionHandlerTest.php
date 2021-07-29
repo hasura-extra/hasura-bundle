@@ -22,7 +22,7 @@ class MakeActionHandlerTest extends KernelTestCase
     {
         parent::tearDown();
 
-        $dir =  __DIR__ . '/../../.kernel/temp/app/HasuraAction';
+        $dir = __DIR__ . '/../../.kernel/temp/app/HasuraAction';
         (new Filesystem())->remove($dir);
     }
 

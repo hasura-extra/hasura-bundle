@@ -18,7 +18,7 @@ final class MetadataApi extends AbstractApi
             [
                 'type' => 'export_metadata',
                 'version' => 2,
-                'args' => []
+                'args' => [],
             ]
         );
 
@@ -33,8 +33,8 @@ final class MetadataApi extends AbstractApi
                 'version' => 2,
                 'args' => [
                     'allow_inconsistent_metadata' => $allowInconsistency,
-                    'metadata' => $metadata
-                ]
+                    'metadata' => $metadata,
+                ],
             ]
         );
 
@@ -48,8 +48,8 @@ final class MetadataApi extends AbstractApi
                 'type' => 'reload_metadata',
                 'args' => [
                     'reload_remote_schemas' => $reloadRemoteSchemas,
-                    'reload_sources' => $reloadSources
-                ]
+                    'reload_sources' => $reloadSources,
+                ],
             ]
         );
 
@@ -61,7 +61,7 @@ final class MetadataApi extends AbstractApi
         $response = $this->request(
             [
                 'type' => 'clear_metadata',
-                'args' => []
+                'args' => [],
             ]
         );
 
@@ -73,7 +73,7 @@ final class MetadataApi extends AbstractApi
         $response = $this->request(
             [
                 'type' => 'get_inconsistent_metadata',
-                'args' => []
+                'args' => [],
             ]
         );
 
@@ -85,13 +85,12 @@ final class MetadataApi extends AbstractApi
         $response = $this->request(
             [
                 'type' => 'drop_inconsistent_metadata',
-                'args' => []
+                'args' => [],
             ]
         );
 
         return $response->toArray();
     }
-
 
     protected function apiPath(): string
     {

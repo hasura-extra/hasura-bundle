@@ -42,6 +42,6 @@ final class FileExport
         'inherited_roles' => self::INHERITED_ROLES,
         'query_collections' => self::QUERY_COLLECTION,
         'rest_endpoints' => self::REST_ENDPOINTS,
-        'custom_types' => self::CUSTOM_TYPES
+        'custom_types' => self::CUSTOM_TYPES,
     ];
 }

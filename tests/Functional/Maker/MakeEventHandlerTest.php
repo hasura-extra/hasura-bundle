@@ -22,7 +22,7 @@ class MakeEventHandlerTest extends KernelTestCase
     {
         parent::tearDown();
 
-        $dir =  __DIR__ . '/../../.kernel/temp/app/HasuraEvent';
+        $dir = __DIR__ . '/../../.kernel/temp/app/HasuraEvent';
         (new Filesystem())->remove($dir);
     }
 

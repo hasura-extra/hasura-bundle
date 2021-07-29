@@ -29,7 +29,7 @@ abstract class AbstractApi
             'POST',
             $url,
             [
-                'json' => $payload
+                'json' => $payload,
             ]
         );
     }

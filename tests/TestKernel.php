@@ -53,7 +53,7 @@ final class TestKernel extends Kernel implements CompilerPassInterface
                     'hasura',
                     [
                         'base_uri' => 'http://localhost:8080',
-                        'admin_secret' => 'test'
+                        'admin_secret' => 'test',
                     ]
                 );
 

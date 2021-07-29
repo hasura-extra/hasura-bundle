@@ -23,7 +23,6 @@ final class HasuraExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -55,13 +54,13 @@ final class HasuraExtension extends Extension
 
     private function registerAttributesForAutoconfiguration(ContainerBuilder $container): void
     {
-        $callable = static function (ChildDefinition $definition, AsActionHandler|AsEventHandler $attribute): void {
+        $callable = static function (ChildDefinition $definition, AsActionHandler | AsEventHandler $attribute): void {
             $definition->addTag(
                 'hasura.handler',
                 [
                     // Tag attribute not allow array so we need to serialize attribute.
                     // When this PR https://github.com/symfony/symfony/pull/38540 merge, remove it.
-                    'attributes' => \serialize((array)$attribute),
+                    'attributes' => \serialize((array) $attribute),
                     'type' => $attribute instanceof AsActionHandler ? 'action' : 'event',
                 ]
             );
