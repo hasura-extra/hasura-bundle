@@ -141,6 +141,25 @@ QUERY_COLLECTIONS_ALLOW_QUERIES
         );
 
         $this->assertStringEqualsFile(
+            $path . '/remote_schemas.yaml',
+            <<<'REMOTE_SCHEMAS'
+- !include remote_schemas/swapi.yaml
+
+REMOTE_SCHEMAS
+        );
+        $this->assertStringEqualsFile(
+            $path . '/remote_schemas/swapi.yaml',
+            <<<'REMOTE_SCHEMAS_SWAPI'
+name: swapi
+definition:
+    url: 'https://swapi-graphql.netlify.app/.netlify/functions/index'
+    timeout_seconds: 60
+comment: ''
+
+REMOTE_SCHEMAS_SWAPI
+        );
+
+        $this->assertStringEqualsFile(
             $path . '/rest_endpoints.yaml',
             <<<'REST_ENDPOINTS'
 - !include rest_endpoints/get_products.yaml
