@@ -1,0 +1,51 @@
+name: "unit tests"
+
+on: ["pull_request", "push"]
+
+jobs:
+  unit-tests:
+    name: "unit tests"
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+    steps:
+      - name: "checkout"
+        uses: "actions/checkout@v2"
+
+      - name: "docker compose up"
+        run: "docker-compose up -d"
+
+      - name: "installing PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          tools: composer:v2, cs2pr
+          coverage: pcov
+          ini-values: memory_limit=-1
+
+      - name: "get composer cache directory"
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: "cache dependencies"
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: "install dependencies"
+        run: composer install --prefer-dist
+
+      - name: "running unit tests"
+        run: vendor/bin/simple-phpunit --coverage-clover build/logs/phpunit/clover.xml --log-junit build/logs/phpunit/junit.xml
+
+      - name: "upload coverage results to Codecov"
+        uses: codecov/codecov-action@v1
+        with:
+          name: "phpunit-php${{ matrix.php-version }}"
+          flags: phpunit
+          fail_ci_if_error: true
+        continue-on-error: true
