@@ -100,7 +100,7 @@ final class Exporter
         foreach ($customTypes as $type => $items) {
             $typePath = sprintf('custom_types/%s', $type);
             $collectionFilePath = sprintf('%s.yaml', $typePath);
-            $exported[] = $this->createIncludeTaggedValue($collectionFilePath);
+            $exported[$type] = $this->createIncludeTaggedValue($collectionFilePath);
 
             $this->exportItems(
                 $items,

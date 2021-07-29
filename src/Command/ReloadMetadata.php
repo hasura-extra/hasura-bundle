@@ -24,8 +24,16 @@ final class ReloadMetadata extends BaseMetadataCommand
     {
         parent::configure();
 
-        $this->addOption('no-reload-remote-schemas', InputOption::VALUE_NONE);
-        $this->addOption('no-reload-sources', InputOption::VALUE_NONE);
+        $this->addOption(
+            'no-reload-remote-schemas',
+            mode: InputOption::VALUE_NONE,
+            description: 'No reload remote schemas'
+        );
+        $this->addOption(
+            'no-reload-sources',
+            mode: InputOption::VALUE_NONE,
+            description: 'No reload sources'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

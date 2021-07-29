@@ -25,7 +25,11 @@ final class ExportMetadata extends BaseMetadataCommand
     {
         parent::configure();
 
-        $this->addOption('force', InputOption::VALUE_NONE);
+        $this->addOption(
+            'force',
+            mode: InputOption::VALUE_NONE,
+            description: 'Force metadata files sync with current metadata.'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
