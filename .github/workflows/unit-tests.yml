@@ -40,7 +40,7 @@ jobs:
         run: composer install --prefer-dist
 
       - name: "Make Hasura metadata tests"
-        run: make metadata-test
+        run: sleep 10 && make metadata-test
 
       - name: "running unit tests"
         run: vendor/bin/simple-phpunit --coverage-clover build/logs/phpunit/clover.xml --log-junit build/logs/phpunit/junit.xml
