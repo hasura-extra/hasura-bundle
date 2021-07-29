@@ -17,8 +17,6 @@ final class Client
 {
     private HttpClientInterface $httpClient;
 
-    private bool $hasAdminSecret;
-
     public function __construct(string $baseUri, string $adminSecret = null, array $httpClientOptions = [])
     {
         $httpClientOptions['base_uri'] = $baseUri;
@@ -27,16 +25,11 @@ final class Client
             $httpClientOptions['headers']['X-Hasura-Admin-Secret'] = $adminSecret;
         }
 
-        $this->hasAdminSecret = !is_null($adminSecret);
         $this->httpClient = HttpClient::create($httpClientOptions);
     }
 
     public function metadata(): MetadataApi
     {
-        if (!$this->hasAdminSecret) {
-            throw new \RuntimeException('Admin secret should be set to use metadata api.');
-        }
-
         return new MetadataApi($this->httpClient);
     }
 }
