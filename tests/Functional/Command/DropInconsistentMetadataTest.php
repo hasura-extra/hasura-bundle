@@ -17,43 +17,34 @@ use Symfony\Component\Console\Tester\CommandTester;
 class DropInconsistentMetadataTest extends KernelTestCase
 {
     use BackupAndRestoreMetadataTrait;
+    use PutInconsistentTableTrait;
 
     public function testDropInconsistentMetadata(): void
     {
         $kernel = self::bootKernel();
-        $client = $kernel->getContainer()->get('hasura.api_client.client');
-        $metadataInconsistent = $this->backupMetadata;
-        $metadataInconsistent['sources'][0]['tables'][] = [
-            'table' => [
-                'schema' => 'public',
-                'name' => 'inconsistent_table',
-            ],
-        ];
-
-        $client->metadata()->replace($metadataInconsistent, true);
-
-        $metadata = $client->metadata()->export()['metadata'];
-
-        $this->assertTrue(
-            in_array(
-                'inconsistent_table',
-                array_column(array_column($metadata['sources'][0]['tables'], 'table'), 'name')
-            )
-        );
-
         $tester = new CommandTester((new Application($kernel))->find('hasura:metadata:drop-inconsistent'));
-        $tester->execute([]);
+        $client = $kernel->getContainer()->get('hasura.api_client.client');
+
+        $this->putInconsistentTable();
 
         $metadata = $client->metadata()->export()['metadata'];
-
-        $this->assertFalse(
-            in_array(
-                'inconsistent_table',
-                array_column(array_column($metadata['sources'][0]['tables'], 'table'), 'name')
-            )
+        $tableNames = array_column(
+            array_column($metadata['sources'][0]['tables'], 'table'),
+            'name'
         );
 
+        $this->assertTrue(in_array('inconsistent_table', $tableNames, true));
+
+        $tester->execute([]);
         $this->assertStringContainsString('Dropping...', $tester->getDisplay());
         $this->assertStringContainsString('Done!', $tester->getDisplay());
+
+        $metadataAfterDrop = $client->metadata()->export()['metadata'];
+        $tableNamesAfterDrop = array_column(
+            array_column($metadataAfterDrop['sources'][0]['tables'], 'table'),
+            'name'
+        );
+
+        $this->assertFalse(in_array('inconsistent_table', $tableNamesAfterDrop, true));
     }
 }

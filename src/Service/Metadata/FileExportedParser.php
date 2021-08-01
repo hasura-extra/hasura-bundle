@@ -39,30 +39,25 @@ final class FileExportedParser
 
     private function parseYamlFile(string $file): mixed
     {
-        $data = Yaml::parseFile($file, Yaml::PARSE_CUSTOM_TAGS);
+        $value = Yaml::parseFile($file, Yaml::PARSE_CUSTOM_TAGS | Yaml::PARSE_OBJECT_FOR_MAP);
         $inPath = dirname($file);
 
-        if ($data instanceof TaggedValue) {
-            $data = $this->parseTaggedValue($data, $inPath);
-        }
-
-        if (is_array($data)) {
-            $data = $this->parseArrayValue($data, $inPath);
-        }
-
-        return $data;
+        return $this->parseValue($value, $inPath);
     }
 
-    private function parseArrayValue(array $value, string $inPath): array
+    private function parseValue(mixed $value, string $inPath): mixed
     {
-        foreach ($value as &$item) {
-            if (is_array($item)) {
-                $item = $this->parseArrayValue($item, $inPath);
-                continue;
-            }
+        if ($value instanceof \stdClass && ($arrayValue = get_object_vars($value))) {
+            $value = $arrayValue;
+        }
 
-            if ($item instanceof TaggedValue) {
-                $item = $this->parseTaggedValue($item, $inPath);
+        if ($value instanceof TaggedValue) {
+            $value = $this->parseTaggedValue($value, $inPath);
+        }
+
+        if (is_array($value)) {
+            foreach ($value as &$item) {
+                $item = $this->parseValue($item, $inPath);
             }
         }
 
