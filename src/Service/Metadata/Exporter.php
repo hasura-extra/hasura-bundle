@@ -18,10 +18,6 @@ use Symfony\Component\Yaml\Yaml;
 
 final class Exporter
 {
-    private const DEFAULT_YAML_DUMP_INLINE = 10;
-
-    private const DEFAULT_YAML_DUMP_FLAGS = Yaml::DUMP_NULL_AS_TILDE | Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK | Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE;
-
     public function __construct(private Client $client, private Filesystem $filesystem)
     {
     }
@@ -51,9 +47,10 @@ final class Exporter
         foreach ($sources as $source) {
             $sourcePath = sprintf('sources/%s/tables', $source['name']);
             $collectionFile = sprintf('%s.yaml', $sourcePath);
+            $tables = $this->normalizeSourceTables($source['tables']);
 
             $this->exportItems(
-                $source['tables'],
+                $tables,
                 fn (array $table) => sprintf(
                     '%s_%s.yaml',
                     u($table['table']['schema'])->snake()->toString(),
@@ -72,6 +69,21 @@ final class Exporter
             sprintf('%s/%s', $basePath, FileExport::SOURCES),
             $this->yamlDump($exported)
         );
+    }
+
+    private function normalizeSourceTables(array $tables): array
+    {
+        foreach ($tables as &$table) {
+            if (!isset($table['select_permissions'])) {
+                continue;
+            }
+
+            foreach ($table['select_permissions'] as &$selectPermission) {
+                $selectPermission['permission']['filter'] = new \ArrayObject($selectPermission['permission']['filter']);
+            }
+        }
+
+        return $tables;
     }
 
     private function exportActions(array $actions, string $basePath): void
@@ -217,7 +229,9 @@ final class Exporter
 
     private function yamlDump(mixed $data): string
     {
-        return Yaml::dump($data, self::DEFAULT_YAML_DUMP_INLINE, flags: self::DEFAULT_YAML_DUMP_FLAGS);
+        $flags = Yaml::DUMP_NULL_AS_TILDE | Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK | Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE | Yaml::DUMP_OBJECT_AS_MAP;
+
+        return Yaml::dump($data, 10, flags: $flags);
     }
 
     private function createIncludeTaggedValue(string $file): TaggedValue

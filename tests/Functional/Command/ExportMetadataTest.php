@@ -243,6 +243,36 @@ array_relationships:
                 table:
                     schema: public
                     name: product_users
+select_permissions:
+    -
+        role: manager
+        permission:
+            columns:
+                - email
+                - name
+                - created_at
+                - id
+            filter: {  }
+    -
+        role: user
+        permission:
+            columns:
+                - id
+                - name
+                - email
+                - created_at
+            filter:
+                id:
+                    _eq: X-Hasura-User-Id
+update_permissions:
+    -
+        role: user
+        permission:
+            columns: []
+            filter:
+                id:
+                    _eq: X-Hasura-User-Id
+            check: ~
 event_triggers:
     -
         name: insertedUser

@@ -30,6 +30,6 @@ class ClearMetadataTest extends KernelTestCase
 
         $metadata = $client->metadata()->export()['metadata'];
 
-        $this->assertNotSame($this->backupMetadata, $metadata);
+        $this->assertEmpty($metadata['sources'][0]['tables']);
     }
 }

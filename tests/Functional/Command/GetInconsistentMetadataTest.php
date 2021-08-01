@@ -17,19 +17,13 @@ use Symfony\Component\Console\Tester\CommandTester;
 class GetInconsistentMetadataTest extends KernelTestCase
 {
     use BackupAndRestoreMetadataTrait;
+    use PutInconsistentTableTrait;
 
     public function testGetInconsistentMetadata(): void
     {
         $kernel = self::bootKernel();
-        $client = $kernel->getContainer()->get('hasura.api_client.client');
-        $metadataInconsistent = $this->backupMetadata;
-        $metadataInconsistent['sources'][0]['tables'][] = [
-            'table' => [
-                'schema' => 'public',
-                'name' => 'inconsistent_table',
-            ],
-        ];
-        $client->metadata()->replace($metadataInconsistent, true);
+
+        $this->putInconsistentTable();
 
         $tester = new CommandTester((new Application($kernel))->find('hasura:metadata:get-inconsistent'));
         $tester->execute([]);
