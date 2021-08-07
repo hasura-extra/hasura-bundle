@@ -36,7 +36,7 @@ final class ApplyMetadata extends BaseMetadataCommand
         $this->addOption(
             'allow-no-metadata',
             mode: InputOption::VALUE_NONE,
-            description: 'Allow empty when apply metadata files.'
+            description: 'Allow no metadata files.'
         );
     }
 
