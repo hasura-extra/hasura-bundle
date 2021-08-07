@@ -82,7 +82,7 @@ final class Exporter
 
             $this->exportItems(
                 $source['tables'],
-                fn(array $table) => sprintf(
+                fn (array $table) => sprintf(
                     '%s_%s.yaml',
                     u($table['table']['schema'])->snake()->toString(),
                     u($table['table']['name'])->snake()->toString()
@@ -106,7 +106,7 @@ final class Exporter
     {
         $this->exportItems(
             $actions,
-            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::ACTIONS,
             'actions',
             $basePath
@@ -132,7 +132,7 @@ final class Exporter
 
             $this->exportItems(
                 $items,
-                fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+                fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
                 $collectionFilePath,
                 $typePath,
                 $basePath
@@ -149,7 +149,7 @@ final class Exporter
     {
         $this->exportItems(
             $cronTriggers,
-            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::CRON_TRIGGERS,
             'cron_triggers',
             $basePath
@@ -160,7 +160,7 @@ final class Exporter
     {
         $this->exportItems(
             $remoteSchemas,
-            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::REMOTE_SCHEMAS,
             'remote_schemas',
             $basePath
@@ -171,7 +171,7 @@ final class Exporter
     {
         $this->exportItems(
             $restEndpoints,
-            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::REST_ENDPOINTS,
             'rest_endpoints',
             $basePath
@@ -194,7 +194,7 @@ final class Exporter
     {
         $this->exportItems(
             $inheritedRoles,
-            fn(array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
             FileExport::INHERITED_ROLES,
             'inherited_roles',
             $basePath
@@ -205,7 +205,7 @@ final class Exporter
     {
         $this->exportItems(
             $queryCollections,
-            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::QUERY_COLLECTION,
             'query_collections',
             $basePath
