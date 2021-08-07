@@ -243,6 +243,17 @@ array_relationships:
                 table:
                     schema: public
                     name: product_users
+insert_permissions:
+    -
+        role: manager
+        permission:
+            check: {  }
+            columns:
+                - id
+                - name
+                - email
+                - created_at
+            backend_only: false
 select_permissions:
     -
         role: manager
@@ -266,6 +277,16 @@ select_permissions:
                     _eq: X-Hasura-User-Id
 update_permissions:
     -
+        role: manager
+        permission:
+            columns:
+                - email
+                - name
+                - created_at
+                - id
+            filter: {  }
+            check: {  }
+    -
         role: user
         permission:
             columns: []
@@ -273,6 +294,11 @@ update_permissions:
                 id:
                     _eq: X-Hasura-User-Id
             check: ~
+delete_permissions:
+    -
+        role: manager
+        permission:
+            filter: {  }
 event_triggers:
     -
         name: insertedUser
@@ -321,6 +347,67 @@ object_relationships:
         name: user
         using:
             foreign_key_constraint_on: user_id
+insert_permissions:
+    -
+        role: manager
+        permission:
+            check: {  }
+            columns:
+                - created_at
+                - expired_at
+                - id
+                - product_id
+                - user_id
+            backend_only: false
+    -
+        role: user
+        permission:
+            check:
+                user_id:
+                    _eq: X-Hasura-User-Id
+            set:
+                user_id: x-hasura-User-Id
+            columns:
+                - id
+                - user_id
+                - product_id
+                - expired_at
+                - created_at
+            backend_only: false
+select_permissions:
+    -
+        role: manager
+        permission:
+            columns:
+                - created_at
+                - expired_at
+                - id
+                - product_id
+                - user_id
+            filter: {  }
+update_permissions:
+    -
+        role: manager
+        permission:
+            columns:
+                - created_at
+                - expired_at
+                - id
+                - product_id
+                - user_id
+            filter: {  }
+            check: {  }
+delete_permissions:
+    -
+        role: manager
+        permission:
+            filter: {  }
+    -
+        role: user
+        permission:
+            filter:
+                user_id:
+                    _eq: X-Hasura-User-Id
 
 SOURCES_DEFAULT_TABLES_PUBLIC_PRODUCTS
         );
