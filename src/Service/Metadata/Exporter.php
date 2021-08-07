@@ -32,12 +32,16 @@ final class Exporter
         $data = $this->client->metadata()->export();
         $metadata = $data['metadata'];
 
-        foreach ($metadata as $field => $value) {
-            if (isset(FileExport::FIELDS_MAPPING[$field])) {
-                $value = $this->normalizeEmptyObjectFieldValue($field, $value);
-                $exportMethod = u('export_' . $field)->camel()->toString();
-                $this->{$exportMethod}($value, $metadataPath);
+        foreach (FileExport::FIELDS_MAPPING as $field => $file) {
+            if (!isset($metadata[$field])) {
+                $this->filesystem->remove(sprintf('%s/%s', $metadataPath, $file));
+
+                continue;
             }
+
+            $value = $this->normalizeEmptyObjectFieldValue($field, $metadata[$field]);
+            $exportMethod = u('export_' . $field)->camel()->toString();
+            $this->{$exportMethod}($value, $metadataPath, $file);
         }
     }
 
@@ -72,7 +76,7 @@ final class Exporter
         return $value;
     }
 
-    private function exportSources(array $sources, string $basePath): void
+    private function exportSources(array $sources, string $basePath, string $file): void
     {
         $exported = [];
 
@@ -97,31 +101,31 @@ final class Exporter
         }
 
         $this->filesystem->dumpFile(
-            sprintf('%s/%s', $basePath, FileExport::SOURCES),
+            sprintf('%s/%s', $basePath, $file),
             $this->yamlDump($exported)
         );
     }
 
-    private function exportActions(array $actions, string $basePath): void
+    private function exportActions(array $actions, string $basePath, string $file): void
     {
         $this->exportItems(
             $actions,
             fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            FileExport::ACTIONS,
+            $file,
             'actions',
             $basePath
         );
     }
 
-    private function exportVersion(int $version, string $basePath): void
+    private function exportVersion(int $version, string $basePath, string $file): void
     {
         $this->filesystem->dumpFile(
-            sprintf('%s/%s', $basePath, FileExport::VERSION),
+            sprintf('%s/%s', $basePath, $file),
             $this->yamlDump($version)
         );
     }
 
-    private function exportCustomTypes(array $customTypes, string $basePath): void
+    private function exportCustomTypes(array $customTypes, string $basePath, string $file): void
     {
         $exported = [];
 
@@ -140,73 +144,73 @@ final class Exporter
         }
 
         $this->filesystem->dumpFile(
-            sprintf('%s/%s', $basePath, FileExport::CUSTOM_TYPES),
+            sprintf('%s/%s', $basePath, $file),
             $this->yamlDump($exported)
         );
     }
 
-    private function exportCronTriggers(array $cronTriggers, string $basePath): void
+    private function exportCronTriggers(array $cronTriggers, string $basePath, string $file): void
     {
         $this->exportItems(
             $cronTriggers,
             fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            FileExport::CRON_TRIGGERS,
+            $file,
             'cron_triggers',
             $basePath
         );
     }
 
-    private function exportRemoteSchemas(array $remoteSchemas, string $basePath): void
+    private function exportRemoteSchemas(array $remoteSchemas, string $basePath, string $file): void
     {
         $this->exportItems(
             $remoteSchemas,
             fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            FileExport::REMOTE_SCHEMAS,
+            $file,
             'remote_schemas',
             $basePath
         );
     }
 
-    private function exportRestEndpoints(array $restEndpoints, string $basePath): void
+    private function exportRestEndpoints(array $restEndpoints, string $basePath, string $file): void
     {
         $this->exportItems(
             $restEndpoints,
             fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            FileExport::REST_ENDPOINTS,
+            $file,
             'rest_endpoints',
             $basePath
         );
     }
 
-    private function exportAllowlist(array $allowList, string $basePath): void
+    private function exportAllowlist(array $allowList, string $basePath, string $file): void
     {
         $this->filesystem->dumpFile(
             sprintf(
                 '%s/%s',
                 $basePath,
-                FileExport::ALLOW_LIST
+                $file
             ),
             $this->yamlDump($allowList)
         );
     }
 
-    private function exportInheritedRoles(array $inheritedRoles, string $basePath): void
+    private function exportInheritedRoles(array $inheritedRoles, string $basePath, string $file): void
     {
         $this->exportItems(
             $inheritedRoles,
             fn (array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
-            FileExport::INHERITED_ROLES,
+            $file,
             'inherited_roles',
             $basePath
         );
     }
 
-    private function exportQueryCollections(array $queryCollections, string $basePath): void
+    private function exportQueryCollections(array $queryCollections, string $basePath, string $file): void
     {
         $this->exportItems(
             $queryCollections,
             fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            FileExport::QUERY_COLLECTION,
+            $file,
             'query_collections',
             $basePath
         );
