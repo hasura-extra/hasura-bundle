@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Hasura\Command;
 
+use Hasura\Service\Metadata\EmptyMetadataException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,6 +32,12 @@ final class ApplyMetadata extends BaseMetadataCommand
             mode: InputOption::VALUE_NONE,
             description: 'Allow inconsistency when apply metadata files.'
         );
+
+        $this->addOption(
+            'allow-no-metadata',
+            mode: InputOption::VALUE_NONE,
+            description: 'Allow empty when apply metadata files.'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -39,18 +46,27 @@ final class ApplyMetadata extends BaseMetadataCommand
 
         try {
             $this->metadataManager->apply($input->getOption('allow-inconsistency'));
-            $this->io->section('Done!');
         } catch (HttpExceptionInterface $exception) {
-            $this->io->section($exception->getResponse()->getContent(false));
+            $this->io->error($exception->getResponse()->getContent(false));
             $this->io->error('Please check your Hasura server configuration.');
 
             return 1;
         } catch (ParseException $exception) {
-            $this->io->section(sprintf('Can not parse metadata file: `%s`', $exception->getParsedFile()));
+            $this->io->error(sprintf('Can not parse metadata file: `%s`', $exception->getParsedFile()));
             $this->io->error($exception->getMessage());
 
             return 2;
+        } catch (EmptyMetadataException $exception) {
+            if (!$input->getOption('allow-no-metadata')) {
+                $this->io->error('Not found metadata files.');
+
+                return 3;
+            }
+
+            $this->io->warning('No metadata files to apply.');
         }
+
+        $this->io->section('Done!');
 
         return 0;
     }

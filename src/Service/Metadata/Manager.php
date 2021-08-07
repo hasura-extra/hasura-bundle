@@ -38,6 +38,10 @@ final class Manager implements ManagerInterface
     {
         $metadata = $this->fileExportedParser->parse($this->metadataPath);
 
+        if (empty($metadata)) {
+            throw new EmptyMetadataException('Not found metadata files.');
+        }
+
         $this->apiClient->metadata()->replace($metadata, $allowInconsistency);
     }
 

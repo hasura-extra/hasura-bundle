@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace Hasura\Exception;
 
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface as BaseHttpExceptionInterface;
-
-interface HttpExceptionInterface extends ExceptionInterface, BaseHttpExceptionInterface
+interface ExceptionInterface extends \Throwable
 {
-    public function getMessageCode(): string;
 }
