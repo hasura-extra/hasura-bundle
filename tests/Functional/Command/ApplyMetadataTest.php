@@ -38,4 +38,19 @@ class ApplyMetadataTest extends KernelTestCase
         $this->assertStringContainsString('Applying...', $tester->getDisplay());
         $this->assertStringContainsString('Done!', $tester->getDisplay());
     }
+
+    public function testApplyNothing()
+    {
+        $kernel = self::bootKernel();
+        // apply
+        $tester = new CommandTester((new Application($kernel))->find('hasura:metadata:apply'));
+        $tester->execute([]);
+
+        $this->assertSame(3, $tester->getStatusCode());
+        $this->assertStringContainsString('Not found metadata files.', $tester->getDisplay());
+
+        $tester->execute(['--allow-no-metadata' => true]);
+        $this->assertSame(0, $tester->getStatusCode());
+        $this->assertStringContainsString('No metadata files to apply.', $tester->getDisplay());
+    }
 }
