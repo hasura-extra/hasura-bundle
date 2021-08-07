@@ -13,6 +13,7 @@ namespace Hasura\Tests\Functional\Command;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ExportMetadataTest extends KernelTestCase
 {
@@ -411,5 +412,32 @@ delete_permissions:
 
 SOURCES_DEFAULT_TABLES_PUBLIC_PRODUCTS
         );
+    }
+
+    public function testReExportMetadataRemoved(): void
+    {
+        $kernel = self::bootKernel();
+        $path = sprintf('%s/hasura', $kernel->getProjectDir());
+        $remoteSchemasFile = $path . '/remote_schemas.yaml';
+        $tester = new CommandTester((new Application($kernel))->find('hasura:metadata:export'));
+
+        $tester->execute(['--force']);
+        $this->assertFileExists($remoteSchemasFile);
+
+        $remoteSchemasContentBackup = file_get_contents($remoteSchemasFile);
+
+        (new Filesystem())->remove($remoteSchemasFile);
+
+        $applier = new CommandTester((new Application($kernel))->find('hasura:metadata:apply'));
+        $applier->execute([]);
+
+        (new Filesystem())->touch($remoteSchemasFile);
+
+        $tester->execute(['--force']); // re-export
+        $this->assertFileDoesNotExist($remoteSchemasFile);
+
+        file_put_contents($remoteSchemasFile, $remoteSchemasContentBackup);
+
+        $applier->execute([]); // restore for next test cases.
     }
 }

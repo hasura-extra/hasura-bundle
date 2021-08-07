@@ -2,7 +2,8 @@
 
 ## 1.0.3
 
-+ Fix cast object as array when apply metadata (insert, update, delete table permissions check and filter fields).
++ Bug #13: Fix cast object as array when apply metadata (insert, update, delete table permissions check and filter fields).
++ Bug #15: Re-export metadata had been removed not affect.
 
 ## 1.0.2
 
