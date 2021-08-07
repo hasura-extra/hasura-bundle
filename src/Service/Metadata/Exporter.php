@@ -34,10 +34,42 @@ final class Exporter
 
         foreach ($metadata as $field => $value) {
             if (isset(FileExport::FIELDS_MAPPING[$field])) {
+                $value = $this->normalizeEmptyObjectFieldValue($field, $value);
                 $exportMethod = u('export_' . $field)->camel()->toString();
                 $this->{$exportMethod}($value, $metadataPath);
             }
         }
+    }
+
+    private function normalizeEmptyObjectFieldValue(string $field, mixed $value): mixed
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        static $objectFieldPatterns = [
+            '~^sources\.\d+\.tables\.\d+\.(select|insert|update|delete)_permissions\.\d+\.permission\.(check|filter)$~',
+        ];
+
+        foreach ($value as $childField => &$childValue) {
+            $childValue = $this->normalizeEmptyObjectFieldValue(
+                sprintf('%s.%s', $field, $childField),
+                $childValue
+            );
+        }
+
+        if (!empty($value)) {
+            return $value;
+        }
+
+        foreach ($objectFieldPatterns as $pattern) {
+            if (preg_match($pattern, $field)) {
+                $value = new \ArrayObject($value);
+                break;
+            }
+        }
+
+        return $value;
     }
 
     private function exportSources(array $sources, string $basePath): void
@@ -47,11 +79,10 @@ final class Exporter
         foreach ($sources as $source) {
             $sourcePath = sprintf('sources/%s/tables', $source['name']);
             $collectionFile = sprintf('%s.yaml', $sourcePath);
-            $tables = $this->normalizeSourceTables($source['tables']);
 
             $this->exportItems(
-                $tables,
-                fn (array $table) => sprintf(
+                $source['tables'],
+                fn(array $table) => sprintf(
                     '%s_%s.yaml',
                     u($table['table']['schema'])->snake()->toString(),
                     u($table['table']['name'])->snake()->toString()
@@ -71,26 +102,11 @@ final class Exporter
         );
     }
 
-    private function normalizeSourceTables(array $tables): array
-    {
-        foreach ($tables as &$table) {
-            if (!isset($table['select_permissions'])) {
-                continue;
-            }
-
-            foreach ($table['select_permissions'] as &$selectPermission) {
-                $selectPermission['permission']['filter'] = new \ArrayObject($selectPermission['permission']['filter']);
-            }
-        }
-
-        return $tables;
-    }
-
     private function exportActions(array $actions, string $basePath): void
     {
         $this->exportItems(
             $actions,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::ACTIONS,
             'actions',
             $basePath
@@ -116,7 +132,7 @@ final class Exporter
 
             $this->exportItems(
                 $items,
-                fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+                fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
                 $collectionFilePath,
                 $typePath,
                 $basePath
@@ -133,7 +149,7 @@ final class Exporter
     {
         $this->exportItems(
             $cronTriggers,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::CRON_TRIGGERS,
             'cron_triggers',
             $basePath
@@ -144,7 +160,7 @@ final class Exporter
     {
         $this->exportItems(
             $remoteSchemas,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::REMOTE_SCHEMAS,
             'remote_schemas',
             $basePath
@@ -155,7 +171,7 @@ final class Exporter
     {
         $this->exportItems(
             $restEndpoints,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::REST_ENDPOINTS,
             'rest_endpoints',
             $basePath
@@ -178,7 +194,7 @@ final class Exporter
     {
         $this->exportItems(
             $inheritedRoles,
-            fn (array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
             FileExport::INHERITED_ROLES,
             'inherited_roles',
             $basePath
@@ -189,7 +205,7 @@ final class Exporter
     {
         $this->exportItems(
             $queryCollections,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn(array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
             FileExport::QUERY_COLLECTION,
             'query_collections',
             $basePath

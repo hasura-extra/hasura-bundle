@@ -15,8 +15,8 @@ services:
         protocol: tcp
 
   hasura:
-    image: hasura/graphql-engine:v2.0.3
-    command: ['/bin/bash', '-c', 'sleep 10 && exec graphql-engine serve']
+    image: hasura/graphql-engine:v2.0.4
+    restart: on-failure
     environment:
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_DATABASE_URL: postgres://test:test@postgres:5432/test
