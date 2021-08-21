@@ -32,4 +32,9 @@ final class Client
     {
         return new MetadataApi($this->httpClient);
     }
+
+    public function graphql(): GraphqlApi
+    {
+        return new GraphqlApi($this->httpClient);
+    }
 }
