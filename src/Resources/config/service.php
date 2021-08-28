@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Hasura\Service\Metadata\Applier;
 use Hasura\Service\Metadata\Exporter;
 use Hasura\Service\Metadata\FileExportedParser;
 use Hasura\Service\Metadata\Manager;
 use Hasura\Service\Metadata\ManagerInterface;
+use Hasura\Service\Schema\SchemaFactory;
 
 return static function (ContainerConfigurator $configurator) {
     $configurator
@@ -34,5 +34,8 @@ return static function (ContainerConfigurator $configurator) {
             ->args([service('hasura.api_client.client'), service('filesystem')])
         ->set('hasura.service.metadata.file_exported_parser', FileExportedParser::class)
             ->args([service('filesystem')])
+        ->set('hasura.service.schema.schema_factory', SchemaFactory::class)
+            ->args([service('hasura.api_client.client')])
+        ->alias(SchemaFactory::class, 'hasura.service.schema.schema_factory')
     ;
 };
