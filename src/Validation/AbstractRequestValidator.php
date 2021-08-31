@@ -42,7 +42,7 @@ abstract class AbstractRequestValidator implements RequestValidatorInterface
             $violations = $this->validator->validate($content, $this->getConstraints());
 
             if (count($violations) > 0) {
-                throw new \UnexpectedValueException($violations->get(0)->getMessage());
+                throw new \UnexpectedValueException(sprintf('[%s] %s', $violations->get(0)->getPropertyPath(), $violations->get(0)->getMessage()));
             }
         } catch (\Exception $e) {
             throw new BadRequestHttpException('Bad request content!', $e, $e->getCode());

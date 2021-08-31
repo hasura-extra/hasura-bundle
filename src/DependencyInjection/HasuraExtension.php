@@ -54,7 +54,7 @@ final class HasuraExtension extends Extension
 
     private function registerAttributesForAutoconfiguration(ContainerBuilder $container): void
     {
-        $callable = static function (ChildDefinition $definition, AsActionHandler | AsEventHandler $attribute): void {
+        $callable = static function (ChildDefinition $definition, AsActionHandler|AsEventHandler $attribute): void {
             $definition->addTag(
                 'hasura.handler',
                 [
