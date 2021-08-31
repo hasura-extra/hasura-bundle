@@ -12,5 +12,5 @@ namespace Hasura\Handler;
 
 interface ActionHandlerInterface
 {
-    public function handle(string $action, array | object $input, array $sessionVariables): array | object;
+    public function handle(string $action, array|object $input, array $sessionVariables): array|object;
 }
