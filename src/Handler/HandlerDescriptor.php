@@ -18,7 +18,7 @@ final class HandlerDescriptor
     ) {
     }
 
-    public function getHandle(): ActionHandlerInterface | EventHandlerInterface
+    public function getHandle(): ActionHandlerInterface|EventHandlerInterface
     {
         return $this->handler;
     }

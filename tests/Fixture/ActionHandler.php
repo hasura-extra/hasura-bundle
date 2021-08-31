@@ -16,7 +16,7 @@ use Hasura\Handler\ActionHandlerInterface;
 #[AsActionHandler(name: 'test', inputClass: ActionInput::class)]
 final class ActionHandler implements ActionHandlerInterface
 {
-    public function handle(string $action, object | array $input, array $sessionVariables): array | object
+    public function handle(string $action, object|array $input, array $sessionVariables): array|object
     {
         return new ActionOutput();
     }

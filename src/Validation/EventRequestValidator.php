@@ -80,7 +80,6 @@ final class EventRequestValidator extends AbstractRequestValidator
                                     ),
                                 ],
                                 'session_variables' => [
-                                    new Assert\NotNull(),
                                     new Assert\Type('array'),
                                 ],
                                 'trace_context' => [
