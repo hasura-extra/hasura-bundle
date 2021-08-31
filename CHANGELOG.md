@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
++ Bug #26: Can not handle Hasura event when session_variables is null.
+
 ## 1.0.3
 
 + Bug #13: Fix cast object as array when apply metadata (insert, update, delete table permissions check and filter fields).
