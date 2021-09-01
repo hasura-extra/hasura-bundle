@@ -23,7 +23,7 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('base_uri')
                     ->cannotBeEmpty()
-                    ->defaultValue('htpp://localhost:8080')
+                    ->defaultValue('http://localhost:8080')
                 ->end()
                 ->scalarNode('admin_secret')
                     ->cannotBeEmpty()

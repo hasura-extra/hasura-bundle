@@ -39,6 +39,7 @@
     "symfony/console": "^5.3",
     "symfony/maker-bundle": "^1.33",
     "symfony/phpunit-bridge": "^5.3",
-    "symfony/string": "^5.3"
+    "symfony/string": "^5.3",
+    "webonyx/graphql-php": "^14.9"
   }
 }

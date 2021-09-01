@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5
+
++ Enh #20: Add graphql client api
++ Enh #23: Add graphql schema factory from remote schema introspection.
+
 ## 1.0.4
 
 + Bug #26: Can not handle Hasura event when session_variables is null.
