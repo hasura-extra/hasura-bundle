@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Service\Metadata;
+namespace Hasura\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Tag\TaggedValue;

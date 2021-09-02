@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace Hasura\Service\Schema;
+namespace Hasura\Service;
 
 use GraphQL\Type\Introspection;
 use GraphQL\Type\Schema;
