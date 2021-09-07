@@ -12,9 +12,9 @@ namespace Hasura\Service;
 
 use Hasura\ApiClient\Client;
 use Symfony\Component\Filesystem\Filesystem;
-use function Symfony\Component\String\u;
 use Symfony\Component\Yaml\Tag\TaggedValue;
 use Symfony\Component\Yaml\Yaml;
+use function Symfony\Component\String\u;
 
 final class Exporter
 {

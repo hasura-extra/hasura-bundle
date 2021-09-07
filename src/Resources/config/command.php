@@ -24,7 +24,7 @@ return static function (ContainerConfigurator $configurator) {
         ->services()
         ->set('hasura.command.base_metadata', BaseMetadataCommand::class)
             ->abstract()
-            ->args([service('hasura.service.metadata.manager')])
+            ->args([service('hasura.service.manager')])
         ->set('hasura.command.export_metadata', ExportMetadata::class)
             ->parent('hasura.command.base_metadata')
             ->tag('console.command')

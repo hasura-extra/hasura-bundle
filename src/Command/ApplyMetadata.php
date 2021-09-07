@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Hasura\Command;
 
-use Hasura\Service\Metadata\EmptyMetadataException;
+use Hasura\Service\EmptyMetadataException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

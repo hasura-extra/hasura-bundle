@@ -23,7 +23,7 @@ class HasuraBundleTest extends KernelTestCase
         $this->assertTrue($container->has('hasura.api_client.client'));
         $this->assertTrue($container->has('hasura.command.apply_metadata'));
         $this->assertTrue($container->has('hasura.command.export_metadata'));
-        $this->assertTrue($container->has('hasura.service.metadata.manager'));
+        $this->assertTrue($container->has('hasura.service.manager'));
         $this->assertTrue($container->has('hasura.event_listener.resolve_request'));
         $this->assertTrue($container->has('hasura.event_listener.action_input'));
         $this->assertTrue($container->has('hasura.event_listener.handler'));

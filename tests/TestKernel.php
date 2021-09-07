@@ -82,8 +82,8 @@ final class TestKernel extends Kernel implements CompilerPassInterface
         $container->getDefinition('hasura.api_client.client')->setPublic(true);
         $container->getDefinition('hasura.command.apply_metadata')->setPublic(true);
         $container->getDefinition('hasura.command.export_metadata')->setPublic(true);
-        $container->getDefinition('hasura.service.metadata.manager')->setPublic(true);
-        $container->getDefinition('hasura.service.schema.schema_factory')->setPublic(true);
+        $container->getDefinition('hasura.service.manager')->setPublic(true);
+        $container->getDefinition('hasura.service.schema_factory')->setPublic(true);
         $container->getDefinition('hasura.handler.descriptor')->setPublic(true);
         $container->getDefinition('hasura.event_listener.resolve_request')->setPublic(true);
         $container->getDefinition('hasura.event_listener.action_input')->setPublic(true);

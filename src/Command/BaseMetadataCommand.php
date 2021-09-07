@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Hasura\Command;
 
-use Hasura\Service\Metadata\ManagerInterface;
+use Hasura\Service\ManagerInterface;
 
 abstract class BaseMetadataCommand extends BaseCommand
 {
