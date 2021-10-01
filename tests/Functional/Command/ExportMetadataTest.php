@@ -49,6 +49,7 @@ definition:
             type: InsertProductInput!
     type: mutation
     kind: synchronous
+request_transform: ~
 
 ACTION_INSERT_PRODUCT
         );
@@ -155,6 +156,15 @@ name: swapi
 definition:
     url: 'https://swapi-graphql.netlify.app/.netlify/functions/index'
     timeout_seconds: 60
+    customization:
+        type_names:
+            prefix: swapi_
+            mapping: {  }
+        field_names:
+            -
+                prefix: swapi_
+                parent_type: Root
+                mapping: {  }
 comment: ''
 
 REMOTE_SCHEMAS_SWAPI
@@ -311,6 +321,7 @@ event_triggers:
             num_retries: 0
             interval_sec: 10
             timeout_sec: 60
+        request_transform: ~
         webhook: 'http://localhost/hasura_event'
 
 SOURCES_DEFAULT_TABLES_PUBLIC_USERS

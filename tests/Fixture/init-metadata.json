@@ -249,6 +249,7 @@
                     "interval_sec": 10,
                     "timeout_sec": 60
                   },
+                  "request_transform": null,
                   "webhook": "http://localhost/hasura_event"
                 }
               ]
@@ -276,7 +277,20 @@
           "name": "swapi",
           "definition": {
             "url": "https://swapi-graphql.netlify.app/.netlify/functions/index",
-            "timeout_seconds": 60
+            "timeout_seconds": 60,
+            "customization": {
+              "type_names": {
+                "prefix": "swapi_",
+                "mapping": {}
+              },
+              "field_names": [
+                {
+                  "prefix": "swapi_",
+                  "parent_type": "Root",
+                  "mapping": {}
+                }
+              ]
+            }
           },
           "comment": ""
         }
@@ -317,7 +331,8 @@
             ],
             "type": "mutation",
             "kind": "synchronous"
-          }
+          },
+          "request_transform": null
         }
       ],
       "custom_types": {
