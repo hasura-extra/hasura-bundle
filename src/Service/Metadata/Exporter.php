@@ -53,6 +53,7 @@ final class Exporter
 
         static $objectFieldPatterns = [
             '~^sources\.\d+\.tables\.\d+\.(select|insert|update|delete)_permissions\.\d+\.permission\.(check|filter)$~',
+            '~^remote_schemas\.\d+\.definition\.customization\.(type_names|field_names\.\d+)\.mapping$~',
         ];
 
         foreach ($value as $childField => &$childValue) {
