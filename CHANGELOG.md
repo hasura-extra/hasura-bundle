@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6
+
++ Fix #32: Export wrong type of remote schema customize type mappings.
+
 ## 1.0.5
 
 + Enh #20: Add graphql client api
