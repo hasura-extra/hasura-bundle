@@ -86,11 +86,11 @@ final class Exporter
             $collectionFile = sprintf('%s.yaml', $sourcePath);
 
             $this->exportItems(
-                $source['tables'],
+                $source['tables'] ?? [],
                 fn (array $table) => sprintf(
                     '%s_%s.yaml',
-                    u($table['table']['schema'])->snake()->toString(),
-                    u($table['table']['name'])->snake()->toString()
+                    $this->snakeCase($table['table']['schema']),
+                    $this->snakeCase($table['table']['name'])
                 ),
                 $collectionFile,
                 $sourcePath,
@@ -111,7 +111,7 @@ final class Exporter
     {
         $this->exportItems(
             $actions,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['name'])),
             $file,
             'actions',
             $basePath
@@ -137,7 +137,7 @@ final class Exporter
 
             $this->exportItems(
                 $items,
-                fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+                fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['name'])),
                 $collectionFilePath,
                 $typePath,
                 $basePath
@@ -154,7 +154,7 @@ final class Exporter
     {
         $this->exportItems(
             $cronTriggers,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['name'])),
             $file,
             'cron_triggers',
             $basePath
@@ -163,12 +163,27 @@ final class Exporter
 
     private function exportRemoteSchemas(array $remoteSchemas, string $basePath, string $file): void
     {
-        $this->exportItems(
-            $remoteSchemas,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
-            $file,
-            'remote_schemas',
-            $basePath
+        $exported = [];
+
+        foreach ($remoteSchemas as $remoteSchema) {
+            $sourcePath = sprintf('remote_schemas/%s/permissions', $remoteSchema['name']);
+            $collectionFile = sprintf('%s.yaml', $sourcePath);
+
+            $this->exportItems(
+                $remoteSchema['permissions'] ?? [],
+                fn (array $permission) => sprintf('role_%s.yaml', $this->snakeCase($permission['role'])),
+                $collectionFile,
+                $sourcePath,
+                $basePath
+            );
+
+            $remoteSchema['permissions'] = $this->createIncludeTaggedValue($collectionFile);
+            $exported[] = $remoteSchema;
+        }
+
+        $this->filesystem->dumpFile(
+            sprintf('%s/%s', $basePath, $file),
+            $this->yamlDump($exported)
         );
     }
 
@@ -176,7 +191,7 @@ final class Exporter
     {
         $this->exportItems(
             $restEndpoints,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['name'])),
             $file,
             'rest_endpoints',
             $basePath
@@ -199,7 +214,7 @@ final class Exporter
     {
         $this->exportItems(
             $inheritedRoles,
-            fn (array $item) => sprintf('%s.yaml', u($item['role_name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['role_name'])),
             $file,
             'inherited_roles',
             $basePath
@@ -210,7 +225,7 @@ final class Exporter
     {
         $this->exportItems(
             $queryCollections,
-            fn (array $item) => sprintf('%s.yaml', u($item['name'])->snake()->toString()),
+            fn (array $item) => sprintf('%s.yaml', $this->snakeCase($item['name'])),
             $file,
             'query_collections',
             $basePath
@@ -228,18 +243,20 @@ final class Exporter
         $collectionFile = sprintf('%s/%s', $basePath, $collectionFile);
         $exported = [];
 
-        $this->filesystem->mkdir($itemsPath);
+        if (!empty($items)) {
+            $this->filesystem->mkdir($itemsPath);
 
-        foreach ($items as $item) {
-            $file = $itemNameGenerator($item);
-            $relativePath = rtrim($this->filesystem->makePathRelative($itemsPath, dirname($collectionFile)), '/');
-            $relativeFilePath = sprintf('%s/%s', $relativePath, $file);
-            $exported[] = $this->createIncludeTaggedValue($relativeFilePath);
+            foreach ($items as $item) {
+                $file = $itemNameGenerator($item);
+                $relativePath = rtrim($this->filesystem->makePathRelative($itemsPath, dirname($collectionFile)), '/');
+                $relativeFilePath = sprintf('%s/%s', $relativePath, $file);
+                $exported[] = $this->createIncludeTaggedValue($relativeFilePath);
 
-            $this->filesystem->dumpFile(
-                sprintf('%s/%s', $itemsPath, $file),
-                $this->yamlDump($item)
-            );
+                $this->filesystem->dumpFile(
+                    sprintf('%s/%s', $itemsPath, $file),
+                    $this->yamlDump($item)
+                );
+            }
         }
 
         $this->filesystem->dumpFile(
@@ -258,5 +275,10 @@ final class Exporter
     private function createIncludeTaggedValue(string $file): TaggedValue
     {
         return new TaggedValue('include', $file);
+    }
+
+    private function snakeCase(string $name): string
+    {
+        return u($name)->snake()->toString();
     }
 }

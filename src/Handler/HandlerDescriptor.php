@@ -13,7 +13,7 @@ namespace Hasura\Handler;
 final class HandlerDescriptor
 {
     public function __construct(
-        private ActionHandlerInterface | EventHandlerInterface $handler,
+        private ActionHandlerInterface|EventHandlerInterface $handler,
         private array $attributes
     ) {
     }
