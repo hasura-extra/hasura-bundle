@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
++ Split remote schema permissions when export metadata.
+
 ## 1.0.6
 
 + Fix #32: Export wrong type of remote schema customize type mappings.
