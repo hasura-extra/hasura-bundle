@@ -145,29 +145,314 @@ QUERY_COLLECTIONS_ALLOW_QUERIES
         $this->assertStringEqualsFile(
             $path . '/remote_schemas.yaml',
             <<<'REMOTE_SCHEMAS'
-- !include remote_schemas/swapi.yaml
+-
+    name: swapi
+    definition:
+        url: 'https://swapi-graphql.netlify.app/.netlify/functions/index'
+        timeout_seconds: 60
+        customization:
+            type_names:
+                prefix: swapi_
+                mapping: {  }
+            field_names:
+                -
+                    prefix: swapi_
+                    parent_type: Root
+                    mapping: {  }
+    comment: ''
+    permissions: !include remote_schemas/swapi/permissions.yaml
 
 REMOTE_SCHEMAS
         );
         $this->assertStringEqualsFile(
-            $path . '/remote_schemas/swapi.yaml',
-            <<<'REMOTE_SCHEMAS_SWAPI'
-name: swapi
-definition:
-    url: 'https://swapi-graphql.netlify.app/.netlify/functions/index'
-    timeout_seconds: 60
-    customization:
-        type_names:
-            prefix: swapi_
-            mapping: {  }
-        field_names:
-            -
-                prefix: swapi_
-                parent_type: Root
-                mapping: {  }
-comment: ''
+            $path . '/remote_schemas/swapi/permissions.yaml',
+            <<<'REMOTE_SCHEMAS_PERMISSIONS_SWAPI'
+- !include permissions/role_manager.yaml
 
-REMOTE_SCHEMAS_SWAPI
+REMOTE_SCHEMAS_PERMISSIONS_SWAPI
+        );
+        $this->assertStringEqualsFile(
+            $path . '/remote_schemas/swapi/permissions/role_manager.yaml',
+            <<<'REMOTE_SCHEMAS_PERMISSIONS_SWAPI_ROLE_MANAGER'
+role: manager
+definition:
+    schema: |-
+        schema  { query: Root }
+
+        type Film { characterConnection: FilmCharactersConnection
+          created: String
+          director: String
+          edited: String
+          episodeID: Int
+          id: ID!
+          openingCrawl: String
+          planetConnection: FilmPlanetsConnection
+          producers: [String]
+          releaseDate: String
+          speciesConnection: FilmSpeciesConnection
+          starshipConnection: FilmStarshipsConnection
+          title: String
+          vehicleConnection: FilmVehiclesConnection
+        }
+
+        type FilmCharactersConnection { characters: [Person]
+          edges: [FilmCharactersEdge]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type FilmCharactersEdge { cursor: String!
+          node: Person
+        }
+
+        type FilmPlanetsConnection { edges: [FilmPlanetsEdge]
+          pageInfo: PageInfo!
+          planets: [Planet]
+          totalCount: Int
+        }
+
+        type FilmPlanetsEdge { cursor: String!
+          node: Planet
+        }
+
+        type FilmSpeciesConnection { edges: [FilmSpeciesEdge]
+          pageInfo: PageInfo!
+          species: [Species]
+          totalCount: Int
+        }
+
+        type FilmSpeciesEdge { cursor: String!
+          node: Species
+        }
+
+        type FilmStarshipsConnection { edges: [FilmStarshipsEdge]
+          pageInfo: PageInfo!
+          starships: [Starship]
+          totalCount: Int
+        }
+
+        type FilmStarshipsEdge { cursor: String!
+          node: Starship
+        }
+
+        type FilmVehiclesConnection { edges: [FilmVehiclesEdge]
+          pageInfo: PageInfo!
+          totalCount: Int
+          vehicles: [Vehicle]
+        }
+
+        type FilmVehiclesEdge { cursor: String!
+          node: Vehicle
+        }
+
+        type PageInfo { endCursor: String
+          hasNextPage: Boolean!
+          hasPreviousPage: Boolean!
+          startCursor: String
+        }
+
+        type Person { birthYear: String
+          created: String
+          edited: String
+          eyeColor: String
+          filmConnection: PersonFilmsConnection
+          gender: String
+          hairColor: String
+          height: Int
+          homeworld: Planet
+          id: ID!
+          mass: Float
+          name: String
+          skinColor: String
+          species: Species
+          starshipConnection: PersonStarshipsConnection
+          vehicleConnection: PersonVehiclesConnection
+        }
+
+        type PersonFilmsConnection { edges: [PersonFilmsEdge]
+          films: [Film]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type PersonFilmsEdge { cursor: String!
+          node: Film
+        }
+
+        type PersonStarshipsConnection { edges: [PersonStarshipsEdge]
+          pageInfo: PageInfo!
+          starships: [Starship]
+          totalCount: Int
+        }
+
+        type PersonStarshipsEdge { cursor: String!
+          node: Starship
+        }
+
+        type PersonVehiclesConnection { edges: [PersonVehiclesEdge]
+          pageInfo: PageInfo!
+          totalCount: Int
+          vehicles: [Vehicle]
+        }
+
+        type PersonVehiclesEdge { cursor: String!
+          node: Vehicle
+        }
+
+        type Planet { climates: [String]
+          created: String
+          diameter: Int
+          edited: String
+          filmConnection: PlanetFilmsConnection
+          gravity: String
+          id: ID!
+          name: String
+          orbitalPeriod: Int
+          population: Float
+          residentConnection: PlanetResidentsConnection
+          rotationPeriod: Int
+          surfaceWater: Float
+          terrains: [String]
+        }
+
+        type PlanetFilmsConnection { edges: [PlanetFilmsEdge]
+          films: [Film]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type PlanetFilmsEdge { cursor: String!
+          node: Film
+        }
+
+        type PlanetResidentsConnection { edges: [PlanetResidentsEdge]
+          pageInfo: PageInfo!
+          residents: [Person]
+          totalCount: Int
+        }
+
+        type PlanetResidentsEdge { cursor: String!
+          node: Person
+        }
+
+        type Root { starship(id: ID, starshipID: ID): Starship
+        }
+
+        type Species { averageHeight: Float
+          averageLifespan: Int
+          classification: String
+          created: String
+          designation: String
+          edited: String
+          eyeColors: [String]
+          filmConnection: SpeciesFilmsConnection
+          hairColors: [String]
+          homeworld: Planet
+          id: ID!
+          language: String
+          name: String
+          personConnection: SpeciesPeopleConnection
+          skinColors: [String]
+        }
+
+        type SpeciesFilmsConnection { edges: [SpeciesFilmsEdge]
+          films: [Film]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type SpeciesFilmsEdge { cursor: String!
+          node: Film
+        }
+
+        type SpeciesPeopleConnection { edges: [SpeciesPeopleEdge]
+          pageInfo: PageInfo!
+          people: [Person]
+          totalCount: Int
+        }
+
+        type SpeciesPeopleEdge { cursor: String!
+          node: Person
+        }
+
+        type Starship { MGLT: Int
+          cargoCapacity: Float
+          consumables: String
+          costInCredits: Float
+          created: String
+          crew: String
+          edited: String
+          filmConnection: StarshipFilmsConnection
+          hyperdriveRating: Float
+          id: ID!
+          length: Float
+          manufacturers: [String]
+          maxAtmospheringSpeed: Int
+          model: String
+          name: String
+          passengers: String
+          pilotConnection: StarshipPilotsConnection
+          starshipClass: String
+        }
+
+        type StarshipFilmsConnection { edges: [StarshipFilmsEdge]
+          films: [Film]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type StarshipFilmsEdge { cursor: String!
+          node: Film
+        }
+
+        type StarshipPilotsConnection { edges: [StarshipPilotsEdge]
+          pageInfo: PageInfo!
+          pilots: [Person]
+          totalCount: Int
+        }
+
+        type StarshipPilotsEdge { cursor: String!
+          node: Person
+        }
+
+        type Vehicle { cargoCapacity: Float
+          consumables: String
+          costInCredits: Float
+          created: String
+          crew: String
+          edited: String
+          filmConnection: VehicleFilmsConnection
+          id: ID!
+          length: Float
+          manufacturers: [String]
+          maxAtmospheringSpeed: Int
+          model: String
+          name: String
+          passengers: String
+          pilotConnection: VehiclePilotsConnection
+          vehicleClass: String
+        }
+
+        type VehicleFilmsConnection { edges: [VehicleFilmsEdge]
+          films: [Film]
+          pageInfo: PageInfo!
+          totalCount: Int
+        }
+
+        type VehicleFilmsEdge { cursor: String!
+          node: Film
+        }
+
+        type VehiclePilotsConnection { edges: [VehiclePilotsEdge]
+          pageInfo: PageInfo!
+          pilots: [Person]
+          totalCount: Int
+        }
+
+        type VehiclePilotsEdge { cursor: String!
+          node: Person
+        }
+REMOTE_SCHEMAS_PERMISSIONS_SWAPI_ROLE_MANAGER
         );
 
         $this->assertStringEqualsFile(
